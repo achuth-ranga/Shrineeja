@@ -1,0 +1,33 @@
+<button mat-button [matMenuTriggerFor]="misReports">MIS Reports
+    <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #misReports="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/trips'"> View Trips </a>
+    <a mat-menu-item [routerLink]="'/diesel'"> Diesel </a>
+    <!-- <a mat-menu-item [routerLink]="'/tripdetails/add'"> Add Trip Details </a> -->
+</mat-menu>
+
+
+<button mat-button [matMenuTriggerFor]="sites">Sites
+    <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #sites="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/sites'"> View Sites</a>
+    <a mat-menu-item [routerLink]="'/sites/add'"> Add Site </a>
+</mat-menu>
+
+<button mat-button [matMenuTriggerFor]="supervisors">Supervisors
+    <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #supervisors="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/supervisors'"> View</a>
+    <a mat-menu-item [routerLink]="'/supervisors/add'"> Add </a>
+</mat-menu>
+
+<button mat-button [matMenuTriggerFor]="drivers">Drivers
+    <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #drivers="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/drivers'"> View</a>
+    <a mat-menu-item [routerLink]="'/drivers/add'"> Add </a>
+</mat-menu>

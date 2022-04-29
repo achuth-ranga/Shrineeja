@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AclGuard } from './secure/guards/acl.guard'
 import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './secure/dashboard/dashboard.component';
-import { ProfileComponent } from './profile/profile.component';
 import { TripsComponent } from './secure/mis/trips/trips.component';
 import { TripDetailsComponent } from './secure/mis/trip-details/trip-details.component';
 import { AddTripdetailsComponent } from './secure/mis/add-tripdetails/add-tripdetails.component';
 import { EditTripdetailsComponent } from './secure/mis/edit-tripdetails/edit-tripdetails.component';
+import { ProfileComponent } from './secure/profile/profile.component';
+import { AuthcheckGuard } from './guards/authcheck.guard';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: 'dashboard',
@@ -48,11 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'signup',
-    component: SignupComponent
+    component: LoginComponent,
+    canActivate: [AuthcheckGuard]
   }
 ];
 

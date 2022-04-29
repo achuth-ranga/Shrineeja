@@ -8,5 +8,4 @@ import { MatSliderModule } from '@angular/material/slider';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'srinija';
 }

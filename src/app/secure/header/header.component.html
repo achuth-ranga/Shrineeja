@@ -1,1 +1,40 @@
-<p>header works!</p>
+<div *ngIf="isLoggedIn; then thenBlock else elseBlock"></div>
+
+<!-- This is Enabled after Login -->
+<ng-template #thenBlock>
+    <mat-toolbar color="primary" class="fixed-header ">
+        <mat-toolbar-row>
+            <button mat-icon-button class="logo-button" aria-label="Example icon-button with menu icon">
+                <a><img src="assets/logo.jpg" alt="" class="logo-button"></a>
+            </button>
+            <span class="menu-spacer"></span>
+
+            <div *ngIf="role == 'admin'; then adminheader"></div>
+            <ng-template #adminheader>
+                <app-admin></app-admin>
+            </ng-template>
+
+            <div *ngIf="role == 'supervisor'; then supervisorHeader"></div>
+            <ng-template #supervisorHeader>
+                <app-supervisor></app-supervisor>
+            </ng-template>
+
+
+            <span class="profile-spacer"></span>
+            <button mat-button [matMenuTriggerFor]="account">Account
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #account="matMenu" yPosition="below">
+                <a mat-menu-item [routerLink]="'/profile'"> Profile </a>
+                <a mat-menu-item [routerLink]="'/logout'"> Logout </a>
+            </mat-menu>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</ng-template>
+
+<!-- This is enabled before Login -->
+<ng-template #elseBlock>
+    <mat-toolbar color="primary">
+        <span>{{title}}</span>
+    </mat-toolbar>
+</ng-template>

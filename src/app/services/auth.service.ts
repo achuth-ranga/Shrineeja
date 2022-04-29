@@ -16,4 +16,10 @@ export class AuthService {
     let token = "someToken";
     return token;
   }
+
+  public getUserRole(): string{
+    let admin = "admin";
+    let supervisor = "supervisor";
+    return supervisor;
+  }
 }
