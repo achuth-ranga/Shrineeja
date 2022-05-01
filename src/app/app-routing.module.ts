@@ -9,6 +9,7 @@ import { AddTripdetailsComponent } from './secure/mis/add-tripdetails/add-tripde
 import { EditTripdetailsComponent } from './secure/mis/edit-tripdetails/edit-tripdetails.component';
 import { ProfileComponent } from './secure/profile/profile.component';
 import { AuthcheckGuard } from './guards/authcheck.guard';
+import { VehicleSearchComponent } from './secure/components/vehicle-search/vehicle-search.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [AuthcheckGuard]
+  },
+  {
+    path: 'vehicles/search',
+    component: VehicleSearchComponent,
+    canActivate: [AclGuard]
   }
 ];
 

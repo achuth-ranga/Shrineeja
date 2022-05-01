@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, from } from 'rxjs';
 import { User } from '../secure/mis/add-tripdetails/user';
 import { map } from 'rxjs/operators';
+import { TripReportColumns } from 'src/app/services/models/trip-data'
+import { TableColumn } from './models/table-column';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripsService {
 
+
   private serviceUrl = 'https://dummyjson.com/users';
 
   constructor(private http: HttpClient) { }
+
+  getTripCoumns(): TableColumn[] {
+    return TripReportColumns;
+  }
 
   getUsers(): Observable<User[]> {
     return this.http

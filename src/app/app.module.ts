@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -38,6 +39,9 @@ import { AdminComponent } from './secure/header/admin/admin.component'
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from './secure/mis/add-tripdetails/confirm-dialog/confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { VehicleSearchComponent } from './secure/components/vehicle-search/vehicle-search.component';
+import { GenericSelectComponent } from './secure/components/generic-select/generic-select.component';
+import { GenericFilterComponent } from './secure/components/generic-filter/generic-filter.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +56,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     SupervisorComponent,
     AdminComponent,
     ConfirmDialogComponent,
+    VehicleSearchComponent,
+    GenericSelectComponent,
+    GenericFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatDialogModule,
     MatPseudoCheckboxModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatAutocompleteModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

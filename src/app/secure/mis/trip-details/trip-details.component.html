@@ -1,1 +1,85 @@
-<p>trip-details works!</p>
+<mat-card fxLayout="row wrap">
+    <span class="example-label">
+        <i> <b>Note:</b> All columns must be entered before submitting</i>
+        <button mat-raised-button color="primary" class="add-button" (click)="addTrip()">Add Trip</button>
+    </span>
+</mat-card>
+
+
+<table mat-table [dataSource]="trips">
+
+    <ng-container matColumnDef="expandedDetail" [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+        <th mat-header-cell *matHeaderCellDef>
+            {{ col.label }}
+        </th>
+
+        <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
+
+            <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                <ng-container *ngSwitchCase="'isSelected'">
+                    <mat-checkbox (change)="element.isSelected = $event.checked"></mat-checkbox>
+                </ng-container>
+                <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                    <button mat-button (click)="element.isEdit = !element.isEdit">
+                        Edit
+                    </button>
+                    <button mat-button class="button-remove">
+                        Delete
+                    </button>
+                </div>
+                <span *ngSwitchCase="'date'">
+                    {{ element[col.key] | date: 'mediumDate' }}
+                </span>
+                <span *ngSwitchDefault>
+                    {{ element[col.key] }}
+                </span>
+            </div>
+
+            <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+
+                <div class="btn-edit" *ngSwitchCase="'edit'">
+                    <button mat-button (click)="editRow(element)">
+                        <mat-icon color="primary">save</mat-icon>
+                    </button>
+                </div>
+
+                <app-generic-select [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [options]='dataService.getBusinessTypes()' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.BUSINESS_TYPE">
+                </app-generic-select>
+
+                <app-generic-select [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [options]='dataService.getClientNames()' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.BUSINESS_CLIENT">
+                </app-generic-select>
+
+                <app-generic-select [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [options]='dataService.getVehicleTypes()' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.VEHICLE_TYPE">
+                </app-generic-select>
+
+                <app-generic-filter [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [filterMethod]='dataService.filterDrivers' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.DRIVER">
+                </app-generic-filter>
+
+                <app-generic-filter [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [filterMethod]='dataService.filterRegnos' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.REGNO_SEARCH">
+                </app-generic-filter>
+
+                <!-- <app-vehicle-search [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    (emitter)="onValueReceivedFromChild($event)" *ngSwitchCase="ColumnTypes.REGNO_SEARCH">
+                </app-vehicle-search> -->
+
+                <mat-form-field class="form-input" *ngSwitchDefault>
+                    <input matInput [required]="col.required" [type]="col.type" [(ngModel)]="element[col.key]"
+                        (change)="inputHandler($event, element.id, col.key)" />
+                </mat-form-field>
+            </div>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayColumns" [ngClass]="'customWidthClass'"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+
+</table>
