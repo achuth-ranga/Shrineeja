@@ -1,0 +1,7 @@
+<button mat-button [matMenuTriggerFor]="driverMisReports">MIS Reports
+    <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #driverMisReports="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/diesel'"> View Diesel </a>
+    <a mat-menu-item [routerLink]="'/diesel/add'">Add Diesel Data</a>
+</mat-menu>

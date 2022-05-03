@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { MisMatserDataService } from 'src/app/services/mis-matser-data.service';
+import { TableColumn } from 'src/app/services/models/table-column';
+import { TripsService } from 'src/app/services/trips.service';
 
 @Component({
   selector: 'app-trips',
@@ -25,8 +29,13 @@ export class TripsComponent implements OnInit {
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
 
-  constructor() {
+  public trips = new MatTableDataSource<any>();
+  public columnsSchema: TableColumn[];
+  public displayColumns: string[];
 
+  constructor(public tripService: TripsService, public dataService: MisMatserDataService) {
+    this.columnsSchema = this.tripService.getTripCoumns();
+    this.displayColumns = this.columnsSchema.map((col) => col.key);
   }
 
   ngOnInit(): void {

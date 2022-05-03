@@ -1,0 +1,11 @@
+<mat-form-field class="form-input">
+    <input matInput type="date" [ngModel]="fromDate | date:'yyyy-MM-dd'" (ngModelChange)="fromDate = $event"
+        (blur)="onBlur()">
+    <mat-label>Start Date</mat-label>
+</mat-form-field>
+
+<mat-form-field class="form-input">
+    <input matInput type="date" [ngModel]="toDate | date:'yyyy-MM-dd'" (ngModelChange)="toDate = $event"
+        (blur)="onBlur()">
+    <mat-label>End Date</mat-label>
+</mat-form-field>

@@ -37,11 +37,7 @@ export class MisMatserDataService {
 
   filterDrivers(name: string): Observable<any[]> {
     return of(DRIVERS_NAMES)
-      .pipe(map((names: any) => {
-        let x: any = names.filter((n: any) => n.toLowerCase().indexOf(name.toLowerCase()) >= 0);
-        console.log(x);
-        return x;
-      }))
+      .pipe(map((names: any) => names.filter((n: any) => n.toLowerCase().indexOf(name.toLowerCase()) >= 0)))
   }
 
   getBusinessTypes(): Observable<string[]> {

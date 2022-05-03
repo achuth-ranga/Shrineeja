@@ -4,19 +4,28 @@
 <ng-template #thenBlock>
     <mat-toolbar color="primary" class="fixed-header ">
         <mat-toolbar-row>
-            <button mat-icon-button class="logo-button" aria-label="Example icon-button with menu icon">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            <span class="menu-spacer"></span>
+            <span class="menu-spacer"></span>
+            <span>{{title}}</span>
+            <!-- <button mat-icon-button class="logo-button" aria-label="Example icon-button with menu icon">
                 <a><img src="assets/logo.jpg" alt="" class="logo-button"></a>
             </button>
-            <span class="menu-spacer"></span>
+            <span class="menu-spacer"></span> -->
 
-            <div *ngIf="role == 'admin'; then adminheader"></div>
+            <div *ngIf="role == userType.ADMIN; then adminheader"></div>
             <ng-template #adminheader>
                 <app-admin></app-admin>
             </ng-template>
 
-            <div *ngIf="role == 'supervisor'; then supervisorHeader"></div>
+            <div *ngIf="role == userType.SUPERVISOR; then supervisorHeader"></div>
             <ng-template #supervisorHeader>
                 <app-supervisor></app-supervisor>
+            </ng-template>
+
+            <div *ngIf="role == userType.DRIVER; then driverHeader"></div>
+            <ng-template #driverHeader>
+                <app-driver></app-driver>
             </ng-template>
 
 
@@ -26,7 +35,7 @@
             </button>
             <mat-menu #account="matMenu" yPosition="below">
                 <a mat-menu-item [routerLink]="'/profile'"> Profile </a>
-                <a mat-menu-item [routerLink]="'/logout'"> Logout </a>
+                <a mat-menu-item (click)="authService.logOut()"> Logout </a>
             </mat-menu>
         </mat-toolbar-row>
     </mat-toolbar>
@@ -35,6 +44,9 @@
 <!-- This is enabled before Login -->
 <ng-template #elseBlock>
     <mat-toolbar color="primary">
+        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        <span class="menu-spacer"></span>
+        <span class="menu-spacer"></span>
         <span>{{title}}</span>
     </mat-toolbar>
 </ng-template>

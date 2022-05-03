@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   public form: FormGroup;
   public loginInvalid: boolean;
+  public loginErrorMsg: string = "";
   private formSubmitAttempt: boolean;
   private returnUrl: string;
 
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService) {
     this.form = this.fb.group({
-      username: ['', Validators.email],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
     this.loginInvalid = false;
@@ -29,11 +30,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   async onSubmit() {
+    let request: any = {
+      "username": this.form.value.username,
+      "password": this.form.value.password
+    }
+    this.authService.authenticate(request).subscribe({
+      next: (v) => this.loginSuccess(v),
+      error: (e) => this.loginError(e)
+    })
+  }
 
+  loginSuccess(response: any) {
+    this.authService.authSuccess(response);
+  }
+
+  loginError(error: any) {
+    this.loginInvalid = true;
+    this.loginErrorMsg = error.msg;
   }
 
 }

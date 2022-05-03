@@ -1,5 +1,7 @@
 import { TripColumnType } from 'src/app/services/enums/trip-column-type';
+import { RuleType } from '../rules/rule-type';
 import { TableColumn } from './table-column';
+import { TripReportColumnsKey } from './table-column';
 
 
 export const TripReportColumns: TableColumn[] = [
@@ -22,16 +24,18 @@ export const TripReportColumns: TableColumn[] = [
         required: true,
     },
     {
-        key: 'startDate',
+        key: TripReportColumnsKey.START_DATE,
         type: TripColumnType.DATE,
         label: 'Start Date',
         required: true,
+        pattern: 'yyyy-MM-dd'
     },
     {
-        key: 'endDate',
+        key: TripReportColumnsKey.END_DATE,
         type: TripColumnType.DATE,
         label: 'End Date',
         required: true,
+        pattern: 'yyyy-MM-dd'
     },
     {
         key: 'clientName',
@@ -70,22 +74,29 @@ export const TripReportColumns: TableColumn[] = [
         required: true,
     },
     {
-        key: 'startKiloMeters',
+        key: TripReportColumnsKey.START_KILOMETERS,
         type: TripColumnType.NUMBER,
         label: 'Start KMS',
         required: true,
     },
     {
-        key: 'endKiloMeters',
+        key: TripReportColumnsKey.END_KILOMETERS,
         type: TripColumnType.NUMBER,
         label: 'End KMS',
         required: true,
     },
     {
-        key: 'totalKiloMeters',
+        key: TripReportColumnsKey.TOTAL_KILOMETERS,
         type: TripColumnType.NUMBER,
         label: 'Total KMS',
         required: true,
+        disabled: true,
+        rule: {
+            type: RuleType.NUMBER,
+            columns: [
+                { number: TripReportColumnsKey.START_KILOMETERS },
+                { number: TripReportColumnsKey.END_KILOMETERS }]
+        }
     },
     {
         key: 'startTime',
@@ -104,25 +115,20 @@ export const TripReportColumns: TableColumn[] = [
         type: TripColumnType.NUMBER,
         label: 'Total Hours',
         required: true,
+        disabled: true,
+        rule: {
+            type: RuleType.DATE_TIME_HOURS,
+            columns: [
+                {
+                    date: TripReportColumnsKey.START_DATE,
+                    time: TripReportColumnsKey.START_TIME
+                },
+                {
+                    date: TripReportColumnsKey.END_DATE,
+                    time: TripReportColumnsKey.END_TIME
+                }]
+        }
     },
-    // {
-    //     key: 'dieselLiters',
-    //     type: TripColumnType.NUMBER,
-    //     label: 'Diesel Liters',
-    //     required: true,
-    // },
-    // {
-    //     key: 'dieselAmount',
-    //     type: TripColumnType.NUMBER,
-    //     label: 'Diesel Amount',
-    //     required: true,
-    // },
-    // {
-    //     key: 'endReading',
-    //     type: TripColumnType.NUMBER,
-    //     label: 'End Reading',
-    //     required: true,
-    // },
     {
         key: 'edit',
         type: 'edit',

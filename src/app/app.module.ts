@@ -42,6 +42,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { VehicleSearchComponent } from './secure/components/vehicle-search/vehicle-search.component';
 import { GenericSelectComponent } from './secure/components/generic-select/generic-select.component';
 import { GenericFilterComponent } from './secure/components/generic-filter/generic-filter.component';
+import { GenericDateComponent } from './secure/components/generic-date/generic-date.component';
+import { DatePipe } from '@angular/common';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { DriverComponent } from './secure/header/driver/driver.component';
+import { DateFilterComponent } from './secure/components/date-filter/date-filter.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +64,9 @@ import { GenericFilterComponent } from './secure/components/generic-filter/gener
     VehicleSearchComponent,
     GenericSelectComponent,
     GenericFilterComponent,
+    GenericDateComponent,
+    DriverComponent,
+    DateFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,11 +92,12 @@ import { GenericFilterComponent } from './secure/components/generic-filter/gener
     MatDialogModule,
     MatPseudoCheckboxModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTableExporterModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

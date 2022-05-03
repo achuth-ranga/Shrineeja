@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserType } from 'src/app/services/enums/user-type';
 
 @Component({
   selector: 'app-header',
@@ -8,14 +9,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  public title:string;
-  public isLoggedIn:boolean;
-  public role:string;
+  public title: string;
+  public isLoggedIn: boolean;
+  public role: string;
+  public userType = UserType;
 
-  constructor(private authService: AuthService) { 
+  constructor(public authService: AuthService) {
     this.title = "Shreenija Travels";
     this.isLoggedIn = false;
-    this.role="";
+    this.role = "";
   }
 
   ngOnInit(): void {
@@ -23,6 +25,7 @@ export class HeaderComponent implements OnInit {
     this.role = this.authService.getUserRole();
   }
 
- 
+
+
 
 }
