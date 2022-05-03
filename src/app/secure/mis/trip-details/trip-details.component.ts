@@ -96,7 +96,12 @@ export class TripDetailsComponent implements OnInit {
         if (ruleEvaluator) {
           let value = ruleEvaluator.getValue(object, column.rule.columns);
           if (value) {
-            object[column.key] = value;
+            try {
+              let limitedTo = (Math.round(value * 100) / 100).toFixed(2);
+              object[column.key] = limitedTo;
+            } catch (error) {
+              object[column.key] = value;
+            }
           }
         }
       }
