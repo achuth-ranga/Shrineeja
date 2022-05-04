@@ -1,6 +1,7 @@
 <mat-form-field>
     <mat-icon matSuffix>arrow_drop_down</mat-icon>
-    <input type="text" aria-label="Number" matInput [formControl]="control" (blur)="onBlur()" [matAutocomplete]="auto">
+    <input type="text" aria-label="Number" matInput [formControl]="control" (blur)="onBlur()" [matAutocomplete]="auto"
+        [(ngModel)]="selectedValue">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option" #matOption
             (onSelectionChange)="onSelect(matOption.value)" (click)="onSelect(matOption.value)">
