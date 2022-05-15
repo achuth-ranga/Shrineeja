@@ -2,45 +2,53 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
 import { UserType } from './enums/user-type';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private router: Router) { }
+  private authenticate_url:string = environment.server_uri+"/authenticate";
+  private TOKEN_KEY:string = "token";
+
+  constructor(private router: Router, private http: HttpClient) {
+  }
 
   authenticate(request: any): Observable<any> {
-    let supervisor = {
-      role: UserType.SUPERVISOR,
-      token: UserType.SUPERVISOR
-    }
-    let driver = {
-      role: UserType.DRIVER,
-      token: UserType.DRIVER
-    }
-    let admin = {
-      role: UserType.ADMIN,
-      token: UserType.ADMIN
-    }
+    return this.http.post<any>(this.authenticate_url, request, {});
 
-    let error = {
-      "msg": "Invalid Username or Password"
-    }
-    if (request.username == UserType.SUPERVISOR) {
-      return of(supervisor);
-    } else if (request.username == UserType.DRIVER) {
-      return of(driver);
-    } else if (request.username == UserType.ADMIN) {
-      return of(admin);
-    } else {
-      throw throwError(() => error);
-    }
+    // let supervisor = {
+    //   role: UserType.SUPERVISOR,
+    //   token: UserType.SUPERVISOR
+    // }
+    // let driver = {
+    //   role: UserType.DRIVER,
+    //   token: UserType.DRIVER
+    // }
+    // let admin = {
+    //   role: UserType.ADMIN,
+    //   token: UserType.ADMIN
+    // }
+
+    // let error = {
+    //   "msg": "Invalid Username or Password"
+    // }
+    // if (request.username == UserType.SUPERVISOR) {
+    //   return of(supervisor);
+    // } else if (request.username == UserType.DRIVER) {
+    //   return of(driver);
+    // } else if (request.username == UserType.ADMIN) {
+    //   return of(admin);
+    // } else {
+    //   throw throwError(() => error);
+    // }
   }
 
   authSuccess(authResponse: any) {
-    localStorage.setItem('role', authResponse.role);
-    localStorage.setItem('token', authResponse.token);
+    localStorage.setItem(this.TOKEN_KEY, authResponse.jwtToken);
     this.redirectBasedOnRole();
   }
 
@@ -49,7 +57,8 @@ export class AuthService {
     if (this.getUserRole() == UserType.SUPERVISOR) {
       url = ['/trips/add'];
     } else if (this.getUserRole() == UserType.ADMIN) {
-      url = ['/trips'];
+      // url = ['/trips'];
+      url = ['/trips/add'];
     } else if (this.getUserRole() == UserType.DRIVER) {
       url = ['/diesel/add'];
     }
@@ -62,19 +71,20 @@ export class AuthService {
     localStorage.clear();
     this.router.navigate(['/login']).then(() => {
       window.location.reload();
-    });;
+    });
   }
 
   public isAuthenticated(): boolean {
-    return localStorage.getItem('token') != null;
+    return localStorage.getItem(this.TOKEN_KEY) != null;
   }
 
   public getAuthToken(): string {
-    let token = "someToken";
-    return token;
+    return localStorage.getItem(this.TOKEN_KEY) as string;
   }
 
   public getUserRole(): string {
-    return localStorage.getItem("role") as string;
+    let token = localStorage.getItem(this.TOKEN_KEY) as string;
+    let decoded:any =  jwt_decode(token);
+    return decoded["roles"][0];
   }
 }

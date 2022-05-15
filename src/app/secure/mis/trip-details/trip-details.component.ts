@@ -18,9 +18,9 @@ import { Rulefactory } from 'src/app/services/rules/rule-evaluation-factory';
 export class TripDetailsComponent implements OnInit {
 
   public trips = new MatTableDataSource<any>();
-  public columnsSchema: TableColumn[];
-  public displayColumns: string[];
-  public note:string = "All columns must be entered before Saving";
+  public columnsSchema: TableColumn[] = [];
+  public displayColumns: string[] = [];
+  public note: string = "All columns must be entered before Saving";
   public ColumnTypes = TripColumnType;
 
   @Output()
@@ -28,15 +28,25 @@ export class TripDetailsComponent implements OnInit {
 
 
   constructor(public tripService: TripsService, public dataService: MisMatserDataService) {
-    this.columnsSchema = this.tripService.getTripCoumns();
-    this.displayColumns = this.columnsSchema.map((col) => col.key);
-
     const newRow: any = this.getDummyData(true);
     this.trips.data = [newRow, ...this.trips.data];
   }
 
   ngOnInit(): void {
+    this.tripService.getTripCoumns().subscribe({
+      next: (v) => this.onReportStructure(v),
+      error: (e) => this.onReportStructureFaiure(e)
+    });
+  }
 
+
+  onReportStructure(data: any) {
+    this.columnsSchema = data.columns;
+    this.displayColumns = this.columnsSchema.map((col) => col.key);
+  }
+
+  onReportStructureFaiure(error: any) {
+    console.log(error);
   }
 
   addTrip(): void {

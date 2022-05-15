@@ -30,11 +30,11 @@ export class TripsComponent implements OnInit {
   serializedDate = new FormControl(new Date().toISOString());
 
   public trips = new MatTableDataSource<any>();
-  public columnsSchema: TableColumn[];
+  public columnsSchema: TableColumn[] = [];
   public displayColumns: string[];
 
   constructor(public tripService: TripsService, public dataService: MisMatserDataService) {
-    this.columnsSchema = this.tripService.getTripCoumns();
+    // this.columnsSchema = this.tripService.getTripCoumns();
     this.displayColumns = this.columnsSchema.map((col) => col.key);
   }
 

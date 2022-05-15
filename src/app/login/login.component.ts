@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //
   }
 
   async onSubmit() {
@@ -49,7 +50,10 @@ export class LoginComponent implements OnInit {
 
   loginError(error: any) {
     this.loginInvalid = true;
-    this.loginErrorMsg = error.msg;
+    if(error.status == 401){
+      this.loginErrorMsg = "Invalid Username or Password";
+    }
+   
   }
 
 }

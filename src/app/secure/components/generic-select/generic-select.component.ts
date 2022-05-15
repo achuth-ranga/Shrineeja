@@ -31,7 +31,6 @@ export class GenericSelectComponent implements OnInit {
 
 
   constructor() {
-
     this.filteredOptions = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this.filter(value)),
@@ -39,8 +38,8 @@ export class GenericSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.options.subscribe((array: any) => {
-      this.data = array;
+    this.options.subscribe((obj: any) => {
+      this.data = obj.data.map((v:any) => v.name);
     })
   }
 

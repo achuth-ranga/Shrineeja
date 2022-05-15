@@ -3,11 +3,20 @@ import { Observable, from, map, of, filter } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { VEHICLES } from './models/vehicles';
 import { BUSINESS_TYPES, CLIENT_NAMES, DRIVERS_NAMES, VEHICLE_TYPES } from './models/mis-data';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class MisMatserDataService {
+
+  private businessTypesUrl: string = environment.server_uri + "/constants/business_type";
+  private clientsTypesUrl: string = environment.server_uri + "/constants/client";
+  private vehicleTypesUrl: string = environment.server_uri + "/constants/vehicle_type";
+
+  private dataQueryUrl: string = environment.server_uri + "/constants/query";
+  private vehiclesUrl: string = environment.server_uri + "/vehicles/query";
+  private usersUrl: string = environment.server_uri + "/users/query";
+
 
   constructor(private http: HttpClient) { }
 
@@ -24,15 +33,8 @@ export class MisMatserDataService {
         ));
   }
 
-  // filterRegnos(regno: string): Observable<any[]>{
-  //   return of(VEHICLES)
-  //   .pipe(map((results:any) => {
-  //     return results.filter((r:any) => r.regno.toLowerCase().indexOf(regno.toLowerCase()) >= 0))
-  //   });
-  // }
-
   getVehicleTypes(): Observable<string[]> {
-    return of(VEHICLE_TYPES)
+    return this.http.get<any>(this.vehicleTypesUrl)
   }
 
   filterDrivers(name: string): Observable<any[]> {
@@ -41,10 +43,10 @@ export class MisMatserDataService {
   }
 
   getBusinessTypes(): Observable<string[]> {
-    return of(BUSINESS_TYPES)
+    return this.http.get<any>(this.businessTypesUrl)
   }
 
   getClientNames(): Observable<string[]> {
-    return of(CLIENT_NAMES)
+    return this.http.get<any>(this.clientsTypesUrl)
   }
 }

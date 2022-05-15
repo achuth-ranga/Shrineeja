@@ -54,6 +54,22 @@
               ],
               "outputHashing": "all"
             },
+            "stage": {
+              "budgets": [],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.stage.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -73,6 +89,9 @@
             },
             "development": {
               "browserTarget": "srinija:build:development"
+            },
+            "stage": {
+              "browserTarget": "srinija:build:stage"
             }
           },
           "defaultConfiguration": "development"
