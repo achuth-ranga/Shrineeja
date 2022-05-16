@@ -52,7 +52,7 @@
                 </app-generic-filter>
 
                 <app-generic-filter [keyToUpdate]="col.key" [objectToUpdate]="element"
-                    [filterMethod]='dataService.filterRegnos' (emitter)="onValueReceivedFromChild($event)"
+                    [filterMethod]='dataService.fetchRegnosLike' (emitter)="onValueReceivedFromChild($event)"
                     *ngSwitchCase="ColumnTypes.REGNO_SEARCH">
                 </app-generic-filter>
 

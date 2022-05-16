@@ -14,7 +14,7 @@ export class MisMatserDataService {
   private vehicleTypesUrl: string = environment.server_uri + "/constants/vehicle_type";
 
   private dataQueryUrl: string = environment.server_uri + "/constants/query";
-  private vehiclesUrl: string = environment.server_uri + "/vehicles/query";
+  private vehiclesUrl: string = environment.server_uri + "/vehicles";
   private usersUrl: string = environment.server_uri + "/users/query";
 
 
@@ -30,6 +30,16 @@ export class MisMatserDataService {
       .pipe(
         map((results: any) => results.filter((r: any) => r.regno.toLowerCase().indexOf(regno.toLowerCase()) >= 0)),
         map((results: any) => results.map((r: any) => r.regno)
+        ));
+  }
+
+  fetchRegnosLike(regno: string): Observable<any[]> {
+    let params: any = {
+      'regnolike': regno
+    };
+    return this.http.get<any>(environment.server_uri + "/vehicles", { 'params': params })
+      .pipe(
+        map((results: any) => results.map((r: any) => { return { "name": r.regno, 'id': r.regno } })
         ));
   }
 

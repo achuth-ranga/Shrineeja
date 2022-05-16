@@ -1,11 +1,11 @@
 <mat-form-field>
     <mat-icon matSuffix>search</mat-icon>
     <input type="text" aria-label="Number" matInput [formControl]="control" (blur)="onChange()"
-        [matAutocomplete]="auto" [(ngModel)]="selectedOption" >
+        [matAutocomplete]="auto" [(ngModel)]="display"  >
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option" #matOption
             (onSelectionChange)="onSelect(matOption.value)" (click)="onSelect(matOption.value)">
-            {{option}}
+            {{option.name}}
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

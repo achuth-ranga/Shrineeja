@@ -1,8 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-generic-filter',
@@ -23,30 +23,38 @@ export class GenericFilterComponent implements OnInit {
   @Output()
   emitter = new EventEmitter<any>();
 
-  selectedOption: string = ''
+  selectedOption: any = {'id': '', 'name' : ''}
+  display:string = this.selectedOption.name;
   control = new FormControl();
-  filteredOptions: Observable<any[]>;
+  filteredOptions: Observable<any[]> = EMPTY;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.filteredOptions = this.control.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((val: string) => {
-        let filtered: any[] = this.filterMethod(val || '')
+        let filtered: Observable<any[]> = this.filterMethod(val || '')
         return filtered
       })
     )
   }
 
   ngOnInit(): void {
+    //
   }
 
   onSelect(value: any) {
+    this.display = value.name;
     this.selectedOption = value;
   }
 
   onChange() {
+    if(this.selectedOption.name != this.display){
+      // Unknown value
+      this.selectedOption.name = this.display;
+      this.selectedOption.id = this.display;
+    }
     this.emitter.emit({ 'key': this.keyToUpdate, 'object': this.objectToUpdate, 'value': this.selectedOption });
   }
 
