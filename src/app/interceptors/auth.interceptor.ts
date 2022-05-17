@@ -3,17 +3,18 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const isAuthenticated = this.auth.isAuthenticated();
@@ -24,6 +25,14 @@ export class AuthInterceptor implements HttpInterceptor {
         setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
-    return next.handle(request);
+    return next.handle(request).pipe(catchError(err => this.handleAuthError(err)));
+  }
+
+  private handleAuthError(err: HttpErrorResponse): Observable<any> {
+    //handle your auth error or rethrow
+    if (this.router.url !== '/login' && (err.status === 401 || err.status === 403)) {
+      this.auth.logOut();
+    }
+    return throwError(() => err);
   }
 }
