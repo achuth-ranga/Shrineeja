@@ -58,19 +58,6 @@ export class TripDetailsComponent implements OnInit {
     const newRow: any = {
       isEdit: edit
     };
-    // this.columnsSchema.forEach(col => {
-    //   if (col.type == TripColumnType.DATE) {
-    //     newRow[col.key] = "02/02/2022"
-    //   } else if (col.type == TripColumnType.TIME) {
-    //     newRow[col.key] = "02:00"
-    //   } else if (col.type == TripColumnType.NUMBER) {
-    //     newRow[col.key] = 50
-    //   } else if (col.type == TripColumnType.EDIT) {
-    //     newRow[col.key] = ""
-    //   } else {
-    //     newRow[col.key] = "data"
-    //   }
-    // })
     return newRow;
   }
 
@@ -80,17 +67,27 @@ export class TripDetailsComponent implements OnInit {
 
 
   inputHandler(event: any, object: any, key: string) {
-    // if (!this.valid[id]) {
-    //   this.valid[id] = {};
-    // }
-    // this.valid[id][key] = e.target.validity.valid;
     object[key] = event.target.value;
     this.populateDependentValues(object);
   }
 
+  onDateReceivedFromChild(data: any) {
+    let obj = data.object;
+    obj[data.key] = data.value;
+    this.populateDependentValues(obj);
+  }
+
   onValueReceivedFromChild(data: any) {
     let obj = data.object
-    obj[data.key] = data.value;
+
+    // From select fields
+    obj[data.key] = data.value.name;
+    let id: string = data.key + "_id";
+    if (data.value['id']) {
+      obj[id] = data.value.id;
+    }
+    console.log(data)
+    console.log(obj);
     this.populateDependentValues(obj);
   }
 

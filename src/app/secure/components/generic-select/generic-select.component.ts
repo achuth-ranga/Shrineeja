@@ -25,9 +25,11 @@ export class GenericSelectComponent implements OnInit {
   @Output()
   emitter = new EventEmitter<any>();
 
-  selectedValue: string = ''
+  selectedValue: any = {'id': '', 'name' : ''}
+  display:string = this.selectedValue.name;
+
   control = new FormControl();
-  filteredOptions: Observable<string[]>;
+  filteredOptions: Observable<any[]>;
 
 
   constructor() {
@@ -39,20 +41,32 @@ export class GenericSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.options.subscribe((obj: any) => {
-      this.data = obj.data.map((v:any) => v.name);
+      this.data = obj.data;
     })
   }
 
-  private filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.data.filter((option: any) => option.toLowerCase().includes(filterValue));
+  private filter(value: any): any[] {
+    try{
+      const filterValue = value.name.toLowerCase();
+      return this.data.filter((option: any) => option.name.toLowerCase().includes(filterValue));
+    }catch(Error ){
+      return this.data;
+    }
   }
 
   onSelect(value: any) {
+    this.display = value.name;
     this.selectedValue = value;
   }
 
   onBlur() {
+    if(this.selectedValue.name != this.display){
+      // Unknown value
+      this.selectedValue.name = this.display;
+      this.selectedValue.id = this.display;
+    }
+    console.log("Select")
+    console.log(this.selectedValue)
     this.emitter.emit({ 'key': this.keyToUpdate, 'object': this.objectToUpdate, 'value': this.selectedValue });
   }
 

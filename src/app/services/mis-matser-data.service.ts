@@ -39,7 +39,25 @@ export class MisMatserDataService {
     };
     return this.http.get<any>(environment.server_uri + "/vehicles", { 'params': params })
       .pipe(
-        map((results: any) => results.map((r: any) => { return { "name": r.regno, 'id': r.regno } })
+        map((results: any) => results.map((r: any) => { return { "name": r.regno, 'id': r.id } })
+        ));
+  }
+
+  fetchDrivers(): Observable<any[]> {
+    let query: any = {
+      "userTypes": ["driver"]
+    }
+    return this.http.post<any[]>(environment.server_uri + "/users/query", query, {})
+      .pipe(
+        map((results: any) => {
+          let data: any[] = [];
+          results.payload.forEach((driver: any) => {
+            let converted: any = { "name": driver.lastName + " " + driver.firstName, "id": driver.id }
+            data.push(converted);
+          })
+          let result: any = { 'data': data }
+          return result;
+        }
         ));
   }
 

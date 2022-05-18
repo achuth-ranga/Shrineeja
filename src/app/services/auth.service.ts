@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable} from 'rxjs';
 import { UserType } from './enums/user-type';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import jwt_decode from 'jwt-decode';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private authenticate_url:string = environment.server_uri+"/authenticate";
-  private TOKEN_KEY:string = "token";
+  private authenticate_url: string = environment.server_uri + "/authenticate";
+  private TOKEN_KEY: string = "token";
 
   constructor(private router: Router, private http: HttpClient) {
   }
@@ -52,7 +52,7 @@ export class AuthService {
     this.redirectBasedOnRole();
   }
 
-  redirectBasedOnRole(){
+  redirectBasedOnRole() {
     let url: any;
     if (this.getUserRole() == UserType.SUPERVISOR) {
       url = ['/trips/add'];
@@ -75,7 +75,19 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    return localStorage.getItem(this.TOKEN_KEY) != null;
+    let authenticated: boolean = true;
+    let token = localStorage.getItem(this.TOKEN_KEY) as string;
+    if (token != null) {
+      let decoded: JwtPayload = jwt_decode<JwtPayload>(token);
+      if (decoded.exp) {
+        authenticated = (decoded?.exp) < (new Date().getTime())
+      } else {
+        authenticated = false;
+      }
+    } else {
+      authenticated = false;
+    }
+    return authenticated;
   }
 
   public getAuthToken(): string {
@@ -84,7 +96,7 @@ export class AuthService {
 
   public getUserRole(): string {
     let token = localStorage.getItem(this.TOKEN_KEY) as string;
-    let decoded:any =  jwt_decode(token);
+    let decoded: any = jwt_decode(token);
     return decoded["roles"][0];
   }
 }
