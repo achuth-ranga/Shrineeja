@@ -108,7 +108,7 @@ export class TripDetailsComponent implements OnInit {
 
     // From select fields
     obj[data.key] = data.value.name;
-    let id: string = data.key + "_id";
+    let id: string = data.key + "Id";
     if (data.value['id']) {
       obj[id] = data.value.id;
     }

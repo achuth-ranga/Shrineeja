@@ -57,8 +57,7 @@ export class AuthService {
     if (this.getUserRole() == UserType.SUPERVISOR) {
       url = ['/trips/add'];
     } else if (this.getUserRole() == UserType.ADMIN) {
-      // url = ['/trips'];
-      url = ['/trips/add'];
+      url = ['/trips'];
     } else if (this.getUserRole() == UserType.DRIVER) {
       url = ['/diesel/add'];
     }

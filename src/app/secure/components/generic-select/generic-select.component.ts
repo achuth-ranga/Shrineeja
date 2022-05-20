@@ -46,7 +46,7 @@ export class GenericSelectComponent implements OnInit {
 
   private filter(value: any): any[] {
     try{
-      const filterValue = value.name.toLowerCase();
+      const filterValue = value.toLowerCase();
       return this.data.filter((option: any) => option.name.toLowerCase().includes(filterValue));
     }catch(Error ){
       return this.data;
