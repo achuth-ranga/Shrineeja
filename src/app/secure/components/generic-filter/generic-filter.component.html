@@ -1,7 +1,7 @@
 <mat-form-field>
     <mat-icon matSuffix>search</mat-icon>
-    <input type="text" aria-label="Number" matInput [formControl]="control" (blur)="onChange()"
-        [matAutocomplete]="auto" [(ngModel)]="display"  >
+    <input type="text" aria-label="Number" matInput [formControl]="control" (blur)="onChange($event)"
+        [matAutocomplete]="auto" [ngModel]="selectedOption.name" [value]="" >
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option" #matOption
             (onSelectionChange)="onSelect(matOption.value)" (click)="onSelect(matOption.value)">

@@ -32,12 +32,10 @@ import { TripsComponent } from './secure/mis/trips/trips.component';
 import { TripDetailsComponent } from './secure/mis/trip-details/trip-details.component';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { AddTripdetailsComponent } from './secure/mis/add-tripdetails/add-tripdetails.component';
 import { EditTripdetailsComponent } from './secure/mis/edit-tripdetails/edit-tripdetails.component';
 import { SupervisorComponent } from './secure/header/supervisor/supervisor.component';
 import { AdminComponent } from './secure/header/admin/admin.component'
 import { MatSelectModule } from '@angular/material/select';
-import { ConfirmDialogComponent } from './secure/mis/add-tripdetails/confirm-dialog/confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VehicleSearchComponent } from './secure/components/vehicle-search/vehicle-search.component';
 import { GenericSelectComponent } from './secure/components/generic-select/generic-select.component';
@@ -47,6 +45,7 @@ import { DatePipe } from '@angular/common';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { DriverComponent } from './secure/header/driver/driver.component';
 import { DateFilterComponent } from './secure/components/date-filter/date-filter.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -56,11 +55,9 @@ import { DateFilterComponent } from './secure/components/date-filter/date-filter
     DashboardComponent,
     TripsComponent,
     TripDetailsComponent,
-    AddTripdetailsComponent,
     EditTripdetailsComponent,
     SupervisorComponent,
     AdminComponent,
-    ConfirmDialogComponent,
     VehicleSearchComponent,
     GenericSelectComponent,
     GenericFilterComponent,
@@ -93,7 +90,8 @@ import { DateFilterComponent } from './secure/components/date-filter/date-filter
     MatPseudoCheckboxModule,
     MatCheckboxModule,
     MatAutocompleteModule,
-    MatTableExporterModule
+    MatTableExporterModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

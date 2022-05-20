@@ -26,7 +26,6 @@ export class GenericSelectComponent implements OnInit {
   emitter = new EventEmitter<any>();
 
   selectedValue: any = {'id': '', 'name' : ''}
-  display:string = this.selectedValue.name;
 
   control = new FormControl();
   filteredOptions: Observable<any[]>;
@@ -55,18 +54,15 @@ export class GenericSelectComponent implements OnInit {
   }
 
   onSelect(value: any) {
-    this.display = value.name;
     this.selectedValue = value;
   }
 
-  onBlur() {
-    if(this.selectedValue.name != this.display){
+  onBlur(event:any) {
+    if(this.selectedValue.name != event.target.value){
       // Unknown value
-      this.selectedValue.name = this.display;
-      this.selectedValue.id = this.display;
+      this.selectedValue.name = event.target.value;
+      this.selectedValue.id = event.target.value;
     }
-    console.log("Select")
-    console.log(this.selectedValue)
     this.emitter.emit({ 'key': this.keyToUpdate, 'object': this.objectToUpdate, 'value': this.selectedValue });
   }
 

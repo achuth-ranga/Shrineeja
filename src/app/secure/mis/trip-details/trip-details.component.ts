@@ -9,6 +9,11 @@ import { NumberEvaluation } from 'src/app/services/rules/number-evaluate';
 import { Rule } from 'src/app/services/rules/rule';
 import { DateTimeHoursEvaluation } from 'src/app/services/rules/date-time-evaluation';
 import { Rulefactory } from 'src/app/services/rules/rule-evaluation-factory';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-trip-details',
@@ -27,7 +32,7 @@ export class TripDetailsComponent implements OnInit {
   newItemEvent = new EventEmitter<any>();
 
 
-  constructor(public tripService: TripsService, public dataService: MisMatserDataService) {
+  constructor(public tripService: TripsService, public dataService: MisMatserDataService, private snackBar: MatSnackBar) {
     const newRow: any = this.getDummyData(true);
     this.trips.data = [newRow, ...this.trips.data];
   }
@@ -62,7 +67,28 @@ export class TripDetailsComponent implements OnInit {
   }
 
   save(row: any): void {
-    row.isEdit = false
+    this.tripService.saveTrip(row).subscribe({
+      next: (v) => {
+        v.isEdit = false
+        this.trips.data[0] = v;
+        this.trips.data = [this.getDummyData(true), ...this.trips.data];
+        this.openSnackBar("green-snackbar", "Trip added Successfully","close")
+      },
+      error: (e) => {
+        row.isEdit = true
+        console.log(e);
+        this.openSnackBar("red-snackbar", "Failed to add trip","close")
+      }
+    });
+  }
+
+  openSnackBar(color: string, message: string, action: string) {
+    this.snackBar.open(message, action, {
+      horizontalPosition: "right",
+      verticalPosition: "top",
+      duration: 2000,
+      panelClass: [color]
+    });
   }
 
 

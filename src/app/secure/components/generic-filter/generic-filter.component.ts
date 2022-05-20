@@ -24,7 +24,6 @@ export class GenericFilterComponent implements OnInit {
   emitter = new EventEmitter<any>();
 
   selectedOption: any = {'id': '', 'name' : ''}
-  display:string = this.selectedOption.name;
   control = new FormControl();
   filteredOptions: Observable<any[]> = EMPTY;
 
@@ -45,15 +44,15 @@ export class GenericFilterComponent implements OnInit {
   }
 
   onSelect(value: any) {
-    this.display = value.name;
-    this.selectedOption = value;
+    this.selectedOption.name = value.name;
+    this.selectedOption.id = value.id;
   }
 
-  onChange() {
-    if(this.selectedOption.name != this.display){
+  onChange(event:any) {
+    if(this.selectedOption.name != event.target.value){
       // Unknown value
-      this.selectedOption.name = this.display;
-      this.selectedOption.id = this.display;
+      this.selectedOption.name = event.target.value;
+      this.selectedOption.id = event.target.value;
     }
     this.emitter.emit({ 'key': this.keyToUpdate, 'object': this.objectToUpdate, 'value': this.selectedOption });
   }
