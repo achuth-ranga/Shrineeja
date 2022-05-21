@@ -112,6 +112,9 @@ export class TripsComponent implements OnInit {
       limit: this.length,
       page: 0
     }
+    if(this.filterObj.driverId != ''){
+      queryFilter.driverId = this.filterObj.driverId;
+    }
     this.callServiceToFetchTrips(queryFilter);
   }
 
