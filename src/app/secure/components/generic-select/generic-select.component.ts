@@ -20,6 +20,12 @@ export class GenericSelectComponent implements OnInit {
   keyToUpdate = '';
 
   @Input()
+  label = '';
+
+  @Input()
+  width: any = 78;
+
+  @Input()
   objectToUpdate: any;
 
   @Output()

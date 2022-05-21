@@ -4,16 +4,9 @@ import { TableColumn } from 'src/app/services/models/table-column';
 import { TripsService } from 'src/app/services/trips.service';
 import { TripColumnType } from 'src/app/services/enums/trip-column-type';
 import { MisMatserDataService } from 'src/app/services/mis-matser-data.service';
-import { RuleType } from 'src/app/services/rules/rule-type';
-import { NumberEvaluation } from 'src/app/services/rules/number-evaluate';
 import { Rule } from 'src/app/services/rules/rule';
-import { DateTimeHoursEvaluation } from 'src/app/services/rules/date-time-evaluation';
 import { Rulefactory } from 'src/app/services/rules/rule-evaluation-factory';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-trip-details',

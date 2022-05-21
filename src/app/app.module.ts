@@ -46,6 +46,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { DriverComponent } from './secure/header/driver/driver.component';
 import { DateFilterComponent } from './secure/components/date-filter/date-filter.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatCheckboxModule,
     MatAutocompleteModule,
     MatTableExporterModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

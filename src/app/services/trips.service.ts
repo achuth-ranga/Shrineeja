@@ -14,6 +14,7 @@ export class TripsService {
   private serviceUrl: string = environment.server_uri;
   private reportsStructureUrl: string = environment.server_uri + "/reports/query";
   private addTrip: string = environment.server_uri + "/vehicletrips/add";
+  private postTripsUrl: string = environment.server_uri + "/vehicletrips/query";
 
 
   constructor(private http: HttpClient) { }
@@ -28,6 +29,10 @@ export class TripsService {
 
   saveTrip(trip: any) : Observable<any>{
     return this.http.put<any>(this.addTrip, trip, {});
+  }
+
+  fetchTrips(filter: any) : Observable<any[]>{
+    return this.http.post<any[]>(this.postTripsUrl, filter, {});
   }
 
   

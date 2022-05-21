@@ -2,8 +2,31 @@ mat-card {
     margin-top: 1%;
 }
 
-.filter-button {
+.menu-spacer {
+    flex: 0.01 0.01 auto;
+}
+
+mat-toolbar {
+    background-color: rgb(237, 236, 236);
+}
+
+mat-toolbar-row {
+    /* width: 100%; */
+    /* background-color: white; */
+    margin-left: 75%;
+}
+
+app-generic-select {
     margin-left: 1%;
+    width: 100px !important
+}
+
+app-generic-select.mat-form-field {
+    width: 1000px !important
+}
+
+.filter-button {
+    margin-left: 3%;
 }
 
 .add-button {
@@ -22,8 +45,8 @@ mat-card-actions {
 }
 
 .excel {
-    margin-top: 1%;
-    margin-left: 95%;
+    /* margin-top: 1%; */
+    /* margin-left: 95%; */
     font-size: 24px;
     color: green;
 }
