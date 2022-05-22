@@ -6,7 +6,7 @@
 </mat-card>
 
 
-<table mat-table  [dataSource]="trips">
+<table mat-table [dataSource]="trips">
 
     <ng-container matColumnDef="expandedDetail" [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
         <th mat-header-cell *matHeaderCellDef>

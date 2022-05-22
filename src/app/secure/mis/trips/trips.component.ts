@@ -45,7 +45,7 @@ export class TripsComponent implements OnInit {
   ngOnInit(): void {
     this.trips.paginator = this.paginator;
     this.role = this.authService.getUserRole();
-    this.tripService.getTripCoumns().subscribe({
+    this.tripService.getTripsViewColumns().subscribe({
       next: (v) => this.onReportStructure(v),
       error: (e) => this.onReportStructureFaiure(e)
     });

@@ -27,6 +27,14 @@ export class TripsService {
     .pipe<any>( map((data:any) => data.payload[0]));
   }
 
+  getTripsViewColumns(): Observable<TableColumn[]> {
+    let request: any = {
+      'types': ["vehicleTripsView"]
+    }
+    return this.http.post<TableColumn[]>(this.reportsStructureUrl, request, {})
+    .pipe<any>( map((data:any) => data.payload[0]));
+  }
+
   saveTrip(trip: any) : Observable<any>{
     return this.http.put<any>(this.addTrip, trip, {});
   }

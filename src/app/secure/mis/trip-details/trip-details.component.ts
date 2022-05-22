@@ -56,6 +56,8 @@ export class TripDetailsComponent implements OnInit {
     const newRow: any = {
       isEdit: edit
     };
+    this.setDefaultTimeValue('startTime', newRow);
+    this.setDefaultTimeValue('endTime', newRow);
     return newRow;
   }
 
@@ -82,6 +84,14 @@ export class TripDetailsComponent implements OnInit {
       duration: 2000,
       panelClass: [color]
     });
+  }
+
+  setDefaultTimeValue(key:any, element:any){
+    if(key == 'startTime'){
+      element[key] = "00:00";
+    }else if(key == 'endTime'){
+      element[key] = "12:00";
+    }
   }
 
 
