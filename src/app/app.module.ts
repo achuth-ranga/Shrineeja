@@ -47,6 +47,8 @@ import { DriverComponent } from './secure/header/driver/driver.component';
 import { DateFilterComponent } from './secure/components/date-filter/date-filter.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.component';
+import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     GenericDateComponent,
     DriverComponent,
     DateFilterComponent,
+    DieseladdComponent,
+    DieselviewComponent,
   ],
   imports: [
     BrowserModule,

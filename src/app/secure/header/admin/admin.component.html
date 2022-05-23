@@ -1,12 +1,20 @@
-<button mat-button [matMenuTriggerFor]="misReports">MIS Reports
+<button mat-button [matMenuTriggerFor]="misReportssub">MIS Reports
     <mat-icon>arrow_drop_down</mat-icon>
 </button>
-<mat-menu #misReports="matMenu" yPosition="below">
-    <a mat-menu-item [routerLink]="'/trips'"> View Trips </a>
-    <a mat-menu-item [routerLink]="'/trips/add'">Add Trips</a>
-    <a mat-menu-item [routerLink]="'/diesel'"> Diesel </a>
+<mat-menu #misReportssub="matMenu" yPosition="below">
+    <button mat-menu-item [matMenuTriggerFor]="trips">Trips</button>
+    <button mat-menu-item [matMenuTriggerFor]="diesel">Diesel</button>
 </mat-menu>
 
+<mat-menu #trips="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/trips'"> View Trips </a>
+    <a mat-menu-item [routerLink]="'/trips/add'">Add Trips</a>
+</mat-menu>
+
+<mat-menu #diesel="matMenu" yPosition="below">
+    <a mat-menu-item [routerLink]="'/diesel'"> View Diesel Report </a>
+    <a mat-menu-item [routerLink]="'/diesel/add'">Add Diesel Report</a>
+</mat-menu>
 
 <button mat-button [matMenuTriggerFor]="sites">Sites
     <mat-icon>arrow_drop_down</mat-icon>

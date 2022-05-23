@@ -8,6 +8,8 @@ import { TripDetailsComponent } from './secure/mis/trip-details/trip-details.com
 import { EditTripdetailsComponent } from './secure/mis/edit-tripdetails/edit-tripdetails.component';
 import { ProfileComponent } from './secure/profile/profile.component';
 import { AuthcheckGuard } from './guards/authcheck.guard';
+import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.component';
+import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,16 @@ const routes: Routes = [
   {
     path: 'trips/add',
     component: TripDetailsComponent,
+    canActivate: [AclGuard]
+  },
+  {
+    path: 'diesel',
+    component: DieselviewComponent,
+    canActivate: [AclGuard]
+  },
+  {
+    path: 'diesel/add',
+    component: DieseladdComponent,
     canActivate: [AclGuard]
   },
   {
