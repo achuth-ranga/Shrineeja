@@ -1,4 +1,5 @@
 import { DateTimeHoursEvaluation } from "./date-time-evaluation";
+import { DivideNumberEvaluation } from "./divide-number-evaluate";
 import { NumberEvaluation } from "./number-evaluate"
 import { Rule } from "./rule";
 import { RuleType } from "./rule-type";
@@ -6,6 +7,7 @@ import { RuleType } from "./rule-type";
 export class Rulefactory {
     private static numberEvaluation: NumberEvaluation = new NumberEvaluation();
     private static dateTimeHours: DateTimeHoursEvaluation = new DateTimeHoursEvaluation();
+    private static divideEvaluation: DivideNumberEvaluation = new DivideNumberEvaluation();
 
     static getRuleEvaluator(ruleType: string): Rule<any> {
         let ruleEvaluator!: Rule<any>;
@@ -15,6 +17,9 @@ export class Rulefactory {
                 break;
             case RuleType.DATE_TIME_HOURS:
                 ruleEvaluator = this.dateTimeHours;
+                break;
+            case RuleType.DIVIDE:
+                ruleEvaluator = this.divideEvaluation;
                 break;
         }
         return ruleEvaluator;

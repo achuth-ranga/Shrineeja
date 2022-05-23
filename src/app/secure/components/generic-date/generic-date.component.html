@@ -1,3 +1,3 @@
-<mat-form-field class="form-input" >
+<mat-form-field [style.width.px]="width" class="form-input" >
     <input matInput type="date" [ngModel] ="date | date:'yyyy-MM-dd'" (ngModelChange)="date = $event" (blur)="onBlur()">
 </mat-form-field>

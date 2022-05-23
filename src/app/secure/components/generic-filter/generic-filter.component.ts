@@ -12,6 +12,9 @@ import { startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/o
 export class GenericFilterComponent implements OnInit {
 
   @Input()
+  width: any = 78;
+  
+  @Input()
   keyToUpdate = '';
 
   @Input()

@@ -1,0 +1,57 @@
+mat-card {
+    margin-top: 1%;
+}
+
+
+.green-icon {
+    color: green;
+}
+
+.add-button {
+    margin-left: 1%;
+}
+
+table {
+    min-width: 100%;
+    /* width: 100%; */
+}
+
+
+.btn-edit {
+    text-align: right;
+}
+
+.mat-header-row {
+    font-size: smallerer;
+}
+
+.mat-header-cell {
+    font-size: small;
+    justify-content: center;
+}
+
+.mat-cell {
+    font-size: small;
+    height: auto;
+    justify-content: center;
+}
+
+
+.mat-row {
+    font-size: small;
+    height: auto;
+}
+
+
+
+/* mat-form-field input[type='date'] {
+    background-color: #f17517;
+    width: 100px !important
+} */
+
+td,
+th {
+    white-space: normal;
+    word-wrap: break-word;
+    /* max-width: 200px; */
+}

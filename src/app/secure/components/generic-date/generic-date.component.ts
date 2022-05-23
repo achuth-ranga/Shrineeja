@@ -14,6 +14,9 @@ export class GenericDateComponent implements OnInit {
   control = new FormControl();
 
   @Input()
+  width: any = 78;
+
+  @Input()
   keyToUpdate = '';
 
   @Input()

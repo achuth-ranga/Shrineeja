@@ -1,1 +1,63 @@
-<p>dieseladd works!</p>
+<mat-card fxLayout="row wrap">
+    <span class="example-label">
+        <i> <b>Note:</b> {{note}}</i>
+        <button mat-raised-button color="primary" class="add-button" (click)="add()">Add Diesel Data</button>
+    </span>
+</mat-card>
+
+
+<table mat-table [dataSource]="trips">
+
+    <ng-container matColumnDef="expandedDetail" [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+        <th mat-header-cell *matHeaderCellDef>
+            {{ col.label }}
+        </th>
+
+        <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
+            <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                <span *ngSwitchCase="'date'">
+                    {{ element[col.key] | date: 'yyyy-MM-dd' }}
+                </span>
+                <span *ngSwitchDefault>
+                    {{ element[col.key] }}
+                </span>
+            </div>
+
+            <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+
+                <div class="btn-edit" *ngSwitchCase="'edit'">
+                    <button mat-button (click)="save(element)">
+                        <mat-icon color="primary">save</mat-icon>
+                    </button>
+                </div>
+
+                <app-generic-select [width]="100" [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [options]='dataService.getVehicleTypes()' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.VEHICLE_TYPE">
+                </app-generic-select>
+
+                <app-generic-select [width]="100" [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [options]='dataService.fetchDrivers()' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.DRIVER">
+                </app-generic-select>
+
+                <app-generic-filter [width]="100" [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    [filterMethod]='dataService.fetchRegnosLike' (emitter)="onValueReceivedFromChild($event)"
+                    *ngSwitchCase="ColumnTypes.REGNO_SEARCH">
+                </app-generic-filter>
+
+                <app-generic-date [width]="100" [keyToUpdate]="col.key" [objectToUpdate]="element"
+                    (emitter)="onDateReceivedFromChild($event)" *ngSwitchCase="ColumnTypes.DATE">
+                </app-generic-date>
+
+                <mat-form-field [style.width.px]="120" class="form-input" *ngSwitchDefault>
+                    <input matInput [disabled]='col.disabled' [required]="col.required" [type]="col.type"
+                        [(ngModel)]="element[col.key]" (change)="inputHandler($event, element, col.key)" />
+                </mat-form-field>
+            </div>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayColumns" [ngClass]="'customWidthClass'"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+
+</table>
