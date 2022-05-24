@@ -49,6 +49,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.component';
 import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
+import { UserViewComponent } from './secure/user/view/view.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.c
     DateFilterComponent,
     DieseladdComponent,
     DieselviewComponent,
+    UserViewComponent,
   ],
   imports: [
     BrowserModule,

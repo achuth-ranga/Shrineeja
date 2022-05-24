@@ -3,26 +3,26 @@
 </button>
 <mat-menu #misReportssub="matMenu" yPosition="below">
     <button mat-menu-item [matMenuTriggerFor]="trips">Trips</button>
-    <button mat-menu-item [matMenuTriggerFor]="diesel">Diesel</button>
+    <button mat-menu-item [matMenuTriggerFor]="diesel">Diesel Data</button>
 </mat-menu>
 
 <mat-menu #trips="matMenu" yPosition="below">
-    <a mat-menu-item [routerLink]="'/trips'"> View Trips </a>
-    <a mat-menu-item [routerLink]="'/trips/add'">Add Trips</a>
+    <a mat-menu-item [routerLink]="'/trips'"> View </a>
+    <a mat-menu-item [routerLink]="'/trips/add'">Add</a>
 </mat-menu>
 
 <mat-menu #diesel="matMenu" yPosition="below">
-    <a mat-menu-item [routerLink]="'/diesel'"> View Diesel Report </a>
-    <a mat-menu-item [routerLink]="'/diesel/add'">Add Diesel Report</a>
+    <a mat-menu-item [routerLink]="'/diesel'"> View </a>
+    <a mat-menu-item [routerLink]="'/diesel/add'">Add </a>
 </mat-menu>
 
-<button mat-button [matMenuTriggerFor]="sites">Sites
+<!-- <button mat-button [matMenuTriggerFor]="sites">Sites
     <mat-icon>arrow_drop_down</mat-icon>
 </button>
 <mat-menu #sites="matMenu" yPosition="below">
     <a mat-menu-item [routerLink]="'/sites'"> View Sites</a>
     <a mat-menu-item [routerLink]="'/sites/add'"> Add Site </a>
-</mat-menu>
+</mat-menu> -->
 
 <button mat-button [matMenuTriggerFor]="supervisors">Supervisors
     <mat-icon>arrow_drop_down</mat-icon>

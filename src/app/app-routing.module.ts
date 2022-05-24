@@ -10,6 +10,7 @@ import { ProfileComponent } from './secure/profile/profile.component';
 import { AuthcheckGuard } from './guards/authcheck.guard';
 import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.component';
 import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
+import { UserViewComponent } from './secure/user/view/view.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,16 @@ const routes: Routes = [
   {
     path: 'diesel/add',
     component: DieseladdComponent,
+    canActivate: [AclGuard]
+  },
+  {
+    path: 'supervisors',
+    component: UserViewComponent,
+    canActivate: [AclGuard]
+  },
+  {
+    path: 'drivers',
+    component: UserViewComponent,
     canActivate: [AclGuard]
   },
   {
