@@ -10,6 +10,7 @@ import { TableColumn } from './models/table-column';
 export class UserService {
 
   private serviceUrl: string = environment.server_uri;
+  private createUserUrl: string = this.serviceUrl + "/users";
   private usersQueryUrl: string = this.serviceUrl + "/users/query";
 
 
@@ -55,5 +56,9 @@ export class UserService {
 
   fetchUsers(filter: any): Observable<any[]> {
     return this.http.post<any[]>(this.usersQueryUrl, filter, {});
+  }
+
+  createUser(user: any): Observable<any[]> {
+    return this.http.put<any[]>(this.createUserUrl, user, {});
   }
 }
