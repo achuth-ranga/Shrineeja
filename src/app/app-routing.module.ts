@@ -12,6 +12,7 @@ import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.comp
 import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
 import { UserViewComponent } from './secure/user/view/view.component';
 import { AddUserComponent } from './secure/user/add-user/add-user.component';
+import { ChangePasswordComponent } from './secure/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,11 @@ const routes: Routes = [
   {
     path: 'drivers/add',
     component: AddUserComponent,
+    canActivate: [AclGuard]
+  },
+  {
+    path: 'changepassword',
+    component: ChangePasswordComponent,
     canActivate: [AclGuard]
   },
   {

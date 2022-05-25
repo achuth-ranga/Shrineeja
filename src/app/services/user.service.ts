@@ -14,6 +14,7 @@ export class UserService {
   private usersQueryUrl: string = this.serviceUrl + "/users/query";
   private getProfileUrl: string = this.serviceUrl + "/users";
   private profileUpdateUrl: string = this.serviceUrl + "/users/profile";
+  private changePasswordUrl: string = this.serviceUrl + "/users/changepassword";
 
 
 
@@ -71,5 +72,9 @@ export class UserService {
 
   updateProfile(user: any): Observable<any[]> {
     return this.http.post<any[]>(this.profileUpdateUrl, user, {});
+  }
+
+  changePassword(user: any): Observable<any[]> {
+    return this.http.post<any[]>(this.changePasswordUrl, user, {});
   }
 }

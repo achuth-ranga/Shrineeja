@@ -35,6 +35,7 @@
             </button>
             <mat-menu #account="matMenu" yPosition="below">
                 <a mat-menu-item [routerLink]="'/profile'"> Profile </a>
+                <a mat-menu-item [routerLink]="'/changepassword'"> Change Password </a>
                 <a mat-menu-item (click)="authService.logOut()"> Logout </a>
             </mat-menu>
         </mat-toolbar-row>

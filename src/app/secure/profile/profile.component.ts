@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserType } from 'src/app/services/enums/user-type';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -70,14 +68,6 @@ export class ProfileComponent implements OnInit {
   }
 
   async onSubmit() {
-    let user: any = {
-      "firstName": this.form.value.firstName,
-      "lastName": this.form.value.lastName,
-      "email": this.form.value.email,
-      "mobile": this.form.value.mobile,
-      "address": this.form.value.address,
-    }
-
     let userObj: any = this.form.getRawValue();
     userObj['username'] = this.authService.getUserId();
 
