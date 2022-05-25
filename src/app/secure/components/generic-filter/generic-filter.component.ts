@@ -23,6 +23,9 @@ export class GenericFilterComponent implements OnInit {
   @Input()
   filterMethod: any;
 
+  @Input()
+  label = '';
+
   @Output()
   emitter = new EventEmitter<any>();
 

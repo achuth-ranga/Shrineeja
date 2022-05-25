@@ -8,6 +8,9 @@
             [options]='dataService.fetchDrivers()' (emitter)="onDriverSelected($event)">
         </app-generic-select>
         <!-- </ng-template> -->
+        <app-generic-filter width=150 keyToUpdate="regno" [objectToUpdate]="filterObj" label="Regno"
+            [filterMethod]='dataService.fetchRegnosLike' (emitter)="onRegnoSelected($event)">
+        </app-generic-filter>
         <button class="filter-button" mat-raised-button color="primary" (click)="fetchTrips()">Submit</button>
     </mat-card-content>
 </mat-card>

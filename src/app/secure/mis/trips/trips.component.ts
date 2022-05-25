@@ -62,7 +62,21 @@ export class TripsComponent implements OnInit {
   }
 
   onDriverSelected(driverObj: any) {
-    this.filterObj['driverId'] = driverObj.value.id
+    let key:string = 'driverId';
+    if(driverObj.value.id){
+      this.filterObj[key] = driverObj.value.id
+    }else{
+      delete this.filterObj[key]; 
+    }
+  }
+
+  onRegnoSelected(regnoObj: any) {
+    let key:string = "regnos";
+    if (regnoObj.value.name) {
+      this.filterObj[key] = [regnoObj.value.name]
+    } else {
+      delete this.filterObj[key]; 
+    }
   }
 
   onDateSelected(dateObj: any) {
@@ -112,7 +126,7 @@ export class TripsComponent implements OnInit {
       limit: this.length,
       page: 0
     }
-    if(this.filterObj.driverId != ''){
+    if (this.filterObj.driverId != '') {
       queryFilter.driverId = this.filterObj.driverId;
     }
     this.callServiceToFetchTrips(queryFilter);
@@ -122,8 +136,8 @@ export class TripsComponent implements OnInit {
     let arr = data;
     let i: number = 0;
     let organised: any[] = [];
-    data.forEach((obj:any) => {
-      let newObj:any = {};
+    data.forEach((obj: any) => {
+      let newObj: any = {};
       this.displayColumns.forEach((k) => newObj[k] = obj[k])
       organised.push(newObj);
     })
