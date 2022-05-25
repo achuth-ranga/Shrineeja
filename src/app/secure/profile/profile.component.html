@@ -26,7 +26,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <input matInput (keypress)="numberOnly($event)" type="text" maxlength="10" placeholder="Mobile"
+                <input matInput (keypress)="numberOnlyFormatter($event)" type="text" maxlength="10" placeholder="Mobile"
                     formControlName="mobile" required>
                 <mat-error *ngIf="mobileControl.invalid">
                     {{getErrorMessage('mobile')}}

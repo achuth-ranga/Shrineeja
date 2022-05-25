@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserType } from 'src/app/services/enums/user-type';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { ReactiveFormValidator } from 'src/app/services/form-helpers/reactive-form-validator';
+import { InputFormatter } from 'src/app/services/form-helpers/input-type';
 
 @Component({
   selector: 'app-add-user',
@@ -19,26 +20,31 @@ export class AddUserComponent implements OnInit {
   public form: FormGroup;
   public loginInvalid: boolean;
   public loginErrorMsg: string = "";
-  private formSubmitAttempt: boolean;
-  private returnUrl: string;
+  public numberOnlyFormatter: any = InputFormatter.numberOnly;
+
+  public fnControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
+  public lnControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
+  public emailControl = new FormControl('', [Validators.required, Validators.email]);
+  public mobileControl = new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern("^[0-9]*$")]);
+  public addressControl = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]);
+  public passwordControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
+  public usernameControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
+
 
   constructor(private fb: FormBuilder,
     private router: Router,
     private service: UserService,
     private snackBar: MatSnackBar) {
     this.form = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      mobile: ['', Validators.required],
-      username: ['', Validators.required, Validators.minLength(8), Validators.maxLength(15)],
-      password: ['', Validators.required, Validators.minLength(8), Validators.maxLength(15)],
-      address: ['', Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+      firstName: this.fnControl,
+      lastName: this.lnControl,
+      email: this.emailControl,
+      mobile: this.mobileControl,
+      username: this.usernameControl,
+      password: this.passwordControl,
+      address: this.addressControl
     });
     this.loginInvalid = false;
-    this.formSubmitAttempt = false;
-    this.returnUrl = "";
-
 
     if (this.router.url === '/supervisors/add') {
       this.userAddType = UserType.SUPERVISOR
@@ -52,24 +58,23 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async onSubmit() {
-    let user: any = {
-      "firstName": this.form.value.firstName,
-      "lastName": this.form.value.lastName,
-      "email": this.form.value.email,
-      "mobile": this.form.value.mobile,
-      "address": this.form.value.address,
-      "username": this.form.value.username,
-      "password": this.form.value.password,
-      'userType': this.userAddType
-    }
+  getErrorMessage(key: string) {
+    return ReactiveFormValidator.getErrorMessage(this.form, key);
+  }
+
+  async onSubmit(formGroupDirective: FormGroupDirective) {
+    let user: any = this.form.getRawValue();
+    user['userType'] = this.userAddType;
+
+
     this.service.createUser(user).subscribe({
-      next: (v) => this.onSuccess(v),
+      next: (v) => this.onSuccess(v, formGroupDirective),
       error: (e) => this.onFailure(e)
     })
   }
 
-  onSuccess(response: any) {
+  onSuccess(response: any, formGroupDirective: FormGroupDirective) {
+    formGroupDirective.resetForm();
     this.form.reset();
     this.openSnackBar("green-snackbar", "User created Successfully", "close")
   }

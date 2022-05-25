@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AclGuard } from './secure/guards/acl.guard'
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './secure/dashboard/dashboard.component';
 import { TripsComponent } from './secure/mis/trips/trips.component';
 import { TripDetailsComponent } from './secure/mis/trip-details/trip-details.component';
-import { EditTripdetailsComponent } from './secure/mis/edit-tripdetails/edit-tripdetails.component';
 import { ProfileComponent } from './secure/profile/profile.component';
 import { AuthcheckGuard } from './guards/authcheck.guard';
 import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.component';
@@ -13,18 +11,19 @@ import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.c
 import { UserViewComponent } from './secure/user/view/view.component';
 import { AddUserComponent } from './secure/user/add-user/add-user.component';
 import { ChangePasswordComponent } from './secure/change-password/change-password.component';
+import { AdminOnlyGuard } from './secure/guards/admin-only.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'trips',
     pathMatch: 'full'
   },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AclGuard]
-  },
+  // {
+  //   path: 'dashboard',
+  //   component: DashboardComponent,
+  //   canActivate: [AclGuard]
+  // },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -63,12 +62,12 @@ const routes: Routes = [
   {
     path: 'supervisors/add',
     component: AddUserComponent,
-    canActivate: [AclGuard]
+    canActivate: [AdminOnlyGuard]
   },
   {
     path: 'drivers/add',
     component: AddUserComponent,
-    canActivate: [AclGuard]
+    canActivate: [AdminOnlyGuard]
   },
   {
     path: 'changepassword',

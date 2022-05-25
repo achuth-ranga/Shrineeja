@@ -24,7 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatGridListModule} from '@angular/material/grid-list'
+import { MatGridListModule } from '@angular/material/grid-list'
 
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './secure/dashboard/dashboard.component';
@@ -32,7 +32,6 @@ import { TripsComponent } from './secure/mis/trips/trips.component';
 import { TripDetailsComponent } from './secure/mis/trip-details/trip-details.component';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { EditTripdetailsComponent } from './secure/mis/edit-tripdetails/edit-tripdetails.component';
 import { SupervisorComponent } from './secure/header/supervisor/supervisor.component';
 import { AdminComponent } from './secure/header/admin/admin.component'
 import { MatSelectModule } from '@angular/material/select';
@@ -45,8 +44,8 @@ import { DatePipe } from '@angular/common';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { DriverComponent } from './secure/header/driver/driver.component';
 import { DateFilterComponent } from './secure/components/date-filter/date-filter.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.component';
 import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
 import { UserViewComponent } from './secure/user/view/view.component';
@@ -62,7 +61,6 @@ import { ChangePasswordComponent } from './secure/change-password/change-passwor
     DashboardComponent,
     TripsComponent,
     TripDetailsComponent,
-    EditTripdetailsComponent,
     SupervisorComponent,
     AdminComponent,
     VehicleSearchComponent,

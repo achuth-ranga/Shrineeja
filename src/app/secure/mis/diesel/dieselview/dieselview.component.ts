@@ -4,10 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { DieselDataService } from 'src/app/services/diesel-data.service';
 import { UserType } from 'src/app/services/enums/user-type';
+import { ExcelUtil } from 'src/app/services/excel/excel-util';
 import { MisMatserDataService } from 'src/app/services/mis-matser-data.service';
 import { TableColumn } from 'src/app/services/models/table-column';
-import * as XLSX from 'xlsx';
-
 
 @Component({
   selector: 'app-dieselview',
@@ -130,24 +129,7 @@ export class DieselviewComponent implements OnInit {
   }
 
   createExcelOutOfTable(data: any) {
-    let arr = data;
-    let i: number = 0;
-    let organised: any[] = [];
-    data.forEach((obj:any) => {
-      let newObj:any = {};
-      this.displayColumns.forEach((k) => newObj[k] = obj[k])
-      organised.push(newObj);
-    })
-    let Heading = [this.columnsSchema.map((col) => col.label)];
-    //Had to create a new workbook and then add the header
-    const wb = XLSX.utils.book_new();
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
-    XLSX.utils.sheet_add_aoa(ws, Heading);
-
-    //Starting in the second row to avoid overriding and skipping headers
-    XLSX.utils.sheet_add_json(ws, organised, { origin: 'A2', skipHeader: true });
-    XLSX.utils.book_append_sheet(wb, ws, 'trips');
-    XLSX.writeFile(wb, 'DieselData.xlsx');
+    ExcelUtil.createExcel(this.displayColumns, this.columnsSchema, data, "'DieselData.xlsx'", "diesel");
   }
 
 

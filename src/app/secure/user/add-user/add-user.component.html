@@ -1,6 +1,6 @@
 <mat-card fxLayout="row wrap">
     <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
             <h2>{{title}}</h2>
             <mat-error *ngIf="loginInvalid">
                 {{loginErrorMsg}}
@@ -8,44 +8,45 @@
 
             <mat-form-field class="full-width-input">
                 <input matInput placeholder="Username" formControlName="username" required>
-                <mat-error>
-                    Please provide a valid Username
+                <mat-error *ngIf="usernameControl.invalid">
+                    {{getErrorMessage('username')}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
                 <input matInput type="password" placeholder="Password" formControlName="password" required>
-                <mat-error>
-                    Please provide a valid password
+                <mat-error *ngIf="passwordControl.invalid">
+                    {{getErrorMessage('password')}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
                 <input matInput placeholder="Firstname" formControlName="firstName" required>
-                <mat-error>
-                    Please provide FirtsName
+                <mat-error *ngIf="fnControl.invalid">
+                    {{getErrorMessage('firstName')}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
                 <input matInput placeholder="LastName" formControlName="lastName" required>
-                <mat-error>
-                    Please provide LastName
+                <mat-error *ngIf="lnControl.invalid">
+                    {{getErrorMessage('lastName')}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
                 <input matInput placeholder="Email" formControlName="email" required>
-                <mat-error>
-                    Please provide a valid email address
+                <mat-error *ngIf="emailControl.invalid">
+                    {{getErrorMessage('email')}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <input matInput type="number" [maxlength]="10" placeholder="Mobile" formControlName="mobile" required>
-                <mat-error>
-                    Please provide a valid Mobile number
+                <input matInput (keypress)="numberOnlyFormatter($event)" type="text" maxlength="10" placeholder="Mobile"
+                    formControlName="mobile" required>
+                <mat-error *ngIf="mobileControl.invalid">
+                    {{getErrorMessage('mobile')}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
                 <textarea matInput placeholder="Address" formControlName="address" required></textarea>
-                <mat-error>
-                    Please provide address
+                <mat-error *ngIf="addressControl.invalid">
+                    {{getErrorMessage('address')}}
                 </mat-error>
             </mat-form-field>
 

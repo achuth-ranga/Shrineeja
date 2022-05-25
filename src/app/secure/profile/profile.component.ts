@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { ReactiveFormValidator } from 'src/app/services/form-helpers/reactive-form-validator';
+import { InputFormatter } from 'src/app/services/form-helpers/input-type';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +15,7 @@ export class ProfileComponent implements OnInit {
 
   public title: string = 'Profile';
   public userAddType: any;
+  public numberOnlyFormatter: any = InputFormatter.numberOnly;
 
   public editInProgress: boolean = false;
   public form: FormGroup;
@@ -78,26 +81,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getErrorMessage(key: string) {
-    let error: string = '';
-    if (this.form.controls[key].hasError('required')) {
-      error = 'You must enter a value';
-    } else if (this.form.controls[key].hasError('email')) {
-      error = 'Not a valid email';
-    } else if (this.form.controls[key].hasError('minlength')) {
-      error = 'Min length is ' + this.form.controls[key]?.errors?.['minlength']?.['requiredLength'];
-    } else if (this.form.controls[key].hasError('maxlength')) {
-      error = 'Max length is ' + this.form.controls[key]?.errors?.['maxlength']?.['requiredLength'];
-    }
-    return error;
-  }
-
-  numberOnly(event: any): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-
+    return ReactiveFormValidator.getErrorMessage(this.form, key);
   }
 
   onSuccess(response: any) {
