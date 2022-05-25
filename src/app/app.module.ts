@@ -51,6 +51,7 @@ import { DieseladdComponent } from './secure/mis/diesel/dieseladd/dieseladd.comp
 import { DieselviewComponent } from './secure/mis/diesel/dieselview/dieselview.component';
 import { UserViewComponent } from './secure/user/view/view.component';
 import { AddUserComponent } from './secure/user/add-user/add-user.component';
+import { ProfileComponent } from './secure/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { AddUserComponent } from './secure/user/add-user/add-user.component';
     DieselviewComponent,
     UserViewComponent,
     AddUserComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

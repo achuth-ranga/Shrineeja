@@ -12,6 +12,9 @@ export class UserService {
   private serviceUrl: string = environment.server_uri;
   private createUserUrl: string = this.serviceUrl + "/users";
   private usersQueryUrl: string = this.serviceUrl + "/users/query";
+  private getProfileUrl: string = this.serviceUrl + "/users";
+  private profileUpdateUrl: string = this.serviceUrl + "/users/profile";
+
 
 
   constructor(private http: HttpClient) { }
@@ -60,5 +63,13 @@ export class UserService {
 
   createUser(user: any): Observable<any[]> {
     return this.http.put<any[]>(this.createUserUrl, user, {});
+  }
+
+  getProfile(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(this.createUserUrl+"/"+userId, {});
+  }
+
+  updateProfile(user: any): Observable<any[]> {
+    return this.http.post<any[]>(this.profileUpdateUrl, user, {});
   }
 }

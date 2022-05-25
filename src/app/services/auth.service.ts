@@ -98,4 +98,10 @@ export class AuthService {
     let decoded: any = jwt_decode(token);
     return decoded["roles"][0];
   }
+
+  public getUserId(): string {
+    let token = localStorage.getItem(this.TOKEN_KEY) as string;
+    let decoded: any = jwt_decode(token);
+    return decoded["sub"];
+  }
 }
