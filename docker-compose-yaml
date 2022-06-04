@@ -1,0 +1,42 @@
+version: '3.0'
+
+services:
+
+  mongoserver:
+    image: mongo:3.6
+    container_name: "mongoserver"
+    ports:
+      - 3000:27017
+    restart: "always"
+    networks:
+      - shreenija
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    image: shreenija-backend:0.1
+    container_name: "shreenijaapi"
+    depends_on:
+      - mongoserver
+    ports:
+      - 8080:8080
+    networks:
+      - shreenija
+    restart: "always"
+
+  frontend:
+    image: shreenija-web:0.1
+    container_name: "shreenijaweb"
+    depends_on:
+      - backend
+    ports:
+      - 8081:80
+    networks:
+      - shreenija
+    restart: "always"
+
+networks:
+  shreenija:
+
+volumes:
+  mongodb_data:
