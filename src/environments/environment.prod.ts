@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  server_uri : "http://localhost:8080"
+  production: true,
+  server_uri : "http://49.207.7.6:8080"
 };
