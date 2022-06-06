@@ -11,95 +11,22 @@ mat-toolbar {
 }
 
 mat-toolbar-row {
-    /* width: 100%; */
-    /* background-color: white; */
     margin-left: 75%;
 }
 
 app-generic-select {
     margin-left: 1%;
-    width: 100px !important
 }
 
 app-generic-filter {
     margin-left: 1%;
-    width: 100px !important
-}
-
-
-app-generic-select.mat-form-field {
-    width: 1000px !important
 }
 
 .filter-button {
-    margin-left: 3%;
-}
-
-.add-button {
     margin-left: 1%;
 }
 
-mat-card-content {
-    flex-grow: 1;
-    margin-top: 0.5%;
-}
-
-mat-card-actions {
-    display: inline-block;
-    align-self: flex-end;
-    padding-left: 95%;
-}
-
 .excel {
-    /* margin-top: 1%; */
-    /* margin-left: 95%; */
-    font-size: 24px;
     color: green;
 }
 
-table {
-    min-width: 100%;
-    /* width: 100%; */
-}
-
-
-.btn-edit {
-    text-align: right;
-}
-
-.mat-header-row {
-    font-size: smallerer;
-}
-
-.mat-header-cell {
-    font-size: smaller;
-    justify-content: center;
-}
-
-.mat-cell {
-    font-size: smaller;
-    height: auto;
-    justify-content: center;
-}
-
-
-.mat-row {
-    font-size: smaller;
-    height: auto;
-}
-
-.mat-form-field {
-    width: 70px !important
-}
-
-/* mat-form-field input[type='date'] {
-    background-color: #f17517;
-    width: 100px !important
-} */
-
-td,
-th {
-    white-space: normal;
-    word-wrap: break-word;
-    /* max-width: 200px; */
-}

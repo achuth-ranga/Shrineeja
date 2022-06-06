@@ -19,12 +19,12 @@
 <table mat-table [dataSource]="tableDataSource">
     <caption></caption>
     <ng-container matColumnDef="expandedDetail" [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-        <th mat-header-cell *matHeaderCellDef>
+        <th  style="text-align: center;" mat-header-cell *matHeaderCellDef>
             {{ col.label }}
         </th>
 
         <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
-            <div [ngSwitch]="col.type">
+            <div class="datacell" [ngSwitch]="col.type">
                 <span *ngSwitchCase="'date'">
                     {{ element[col.key] | date: 'yyyy-MM-dd' }}
                 </span>
