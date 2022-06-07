@@ -1,60 +1,6 @@
-mat-card {
-    margin-top: 1%;
+table td {
+    border: none !important;
 }
 
 
 
-.green-icon {
-    color: green;
-}
-
-.add-button {
-    margin-left: 1%;
-}
-
-table {
-    min-width: 100%;
-    /* width: 100%; */
-}
-
-
-.btn-edit {
-    text-align: right;
-}
-
-.mat-header-row {
-    font-size: smallerer;
-}
-
-.mat-header-cell {
-    font-size: smaller;
-    justify-content: center;
-}
-
-.mat-cell {
-    font-size: smaller;
-    height: auto;
-    justify-content: center;
-}
-
-
-.mat-row {
-    font-size: smaller;
-    height: auto;
-}
-
-.mat-form-field {
-    width: 70px !important
-}
-
-/* mat-form-field input[type='date'] {
-    background-color: #f17517;
-    width: 100px !important
-} */
-
-td,
-th {
-    white-space: normal;
-    word-wrap: break-word;
-    /* max-width: 200px; */
-}

@@ -1,6 +1,6 @@
 mat-card {
     max-width: 30%;
-    margin-top: 1%;
+    margin-top: 5%;
     margin-left: 30%;
     text-align: center;
 }
@@ -8,4 +8,5 @@ mat-card {
 mat-form-field {
     margin-top: 5px;
     display: block;
+    font-size: medium;
 }

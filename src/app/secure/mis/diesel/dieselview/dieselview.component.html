@@ -1,13 +1,11 @@
 <mat-card fxLayout="row" class="filter">
-    <mat-card-title>Vehicle Trips</mat-card-title>
+    <mat-card-title>Diesel Data</mat-card-title>
+    <br />
     <mat-card-content>
         <app-date-filter (emitter)="onDateSelected($event)"></app-date-filter>
-        <!-- <div *ngIf="role == userType.ADMIN; then driverFilter"></div> -->
-        <!-- <ng-template #driverFilter> -->
         <app-generic-select width=150 keyToUpdate='driverId' [objectToUpdate]="filterObj" label="Driver"
             [options]='dataService.fetchDrivers()' (emitter)="onDriverSelected($event)">
         </app-generic-select>
-        <!-- </ng-template> -->
         <app-generic-filter width=150 keyToUpdate="regno" [objectToUpdate]="filterObj" label="Regno"
             [filterMethod]='dataService.fetchRegnosLike' (emitter)="onRegnoSelected($event)">
         </app-generic-filter>
@@ -15,8 +13,8 @@
     </mat-card-content>
 </mat-card>
 
-<mat-toolbar color="white">
-    <mat-toolbar-row>
+<mat-toolbar class="grey-background">
+    <mat-toolbar-row class="right-align">
         <mat-icon class="fa-solid excel" color="primary" fontIcon="fa-file-excel" (click)="exportTable()">
         </mat-icon>
         <span class="menu-spacer"></span>
@@ -26,26 +24,27 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
+<div class="wrapper">
+    <table mat-table [dataSource]="trips">
+        <caption></caption>
+        <ng-container matColumnDef="expandedDetail" [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+            <th class="headercell" style="text-align: center;" mat-header-cell *matHeaderCellDef>
+                {{ col.label }}
+            </th>
 
-<table mat-table [dataSource]="trips">
-    <caption></caption>
-    <ng-container matColumnDef="expandedDetail" [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-        <th mat-header-cell *matHeaderCellDef>
-            {{ col.label }}
-        </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
+                <div class="datacell" [ngSwitch]="col.type">
+                    <span *ngSwitchCase="'date'">
+                        {{ element[col.key] | date: 'yyyy-MM-dd' }}
+                    </span>
+                    <span *ngSwitchDefault>
+                        {{ element[col.key] }}
+                    </span>
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayColumns" [ngClass]="'customWidthClass'"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
 
-        <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'">
-            <div [ngSwitch]="col.type">
-                <span *ngSwitchCase="'date'">
-                    {{ element[col.key] | date: 'yyyy-MM-dd' }}
-                </span>
-                <span *ngSwitchDefault>
-                    {{ element[col.key] }}
-                </span>
-            </div>
-        </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayColumns" [ngClass]="'customWidthClass'"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
-
-</table>
+    </table>
+</div>
