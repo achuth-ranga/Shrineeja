@@ -1,28 +1,7 @@
-.menu-spacer {
-    flex: 0.01 0.01 auto;
-}
-
-mat-toolbar {
+/* mat-toolbar {
     background-color: rgb(237, 236, 236);
 }
 
 mat-toolbar-row {
-    width: 100%;
-    margin-left: 75%;
-}
-
-mat-card-content {
-    flex-grow: 1;
-    margin-top: 0.5%;
-}
-
-mat-card-actions {
-    display: inline-block;
-    align-self: flex-end;
-    padding-left: 95%;
-}
-
-.excel {
-    font-size: 24px;
-    color: green;
-}
+    padding-left: 75%;
+} */

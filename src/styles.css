@@ -16,8 +16,32 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
     background: #F44336;
 }
 
+.excel {
+    padding-right: 5%;
+    color: green !important;
+}
+
+.filter-button {
+    margin-left: 1% !important;
+}
+
 .mat-form-field {
     padding-left: 5px !important;
+}
+
+
+.grey-background {
+    background-color: rgb(237, 236, 236) !important;
+}
+
+.right-align {
+    padding-left: 75% !important;
+}
+
+.title {
+    color: whitesmoke;
+    background-color: #3F51B5;
+    margin-bottom: 5% !important;
 }
 
 th.mat-header-cell {
@@ -71,12 +95,9 @@ table td {
 
 .headercell {
     text-align: center;
-    width: 5%;
+    width: 50;
 }
 
 tr th {
     text-align: center;
 }
-
-
-

@@ -1,7 +1,7 @@
 <mat-card fxLayout="row wrap">
     <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <h2>{{title}}</h2>
+            <h2 class="title">{{title}}</h2>
             <mat-error *ngIf="invalidForm">
                 {{errorMsg}}
             </mat-error>
