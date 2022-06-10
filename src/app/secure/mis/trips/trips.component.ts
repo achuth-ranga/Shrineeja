@@ -132,7 +132,7 @@ export class TripsComponent implements OnInit {
   }
 
   createExcelOutOfTable(data: any) {
-    ExcelUtil.createExcel(this.displayColumns, this.columnsSchema, data, "'TripData.xlsx'", "trips");
+    ExcelUtil.createExcel(this.displayColumns, this.columnsSchema, data, "TripData.xlsx", "trips");
   }
 
 

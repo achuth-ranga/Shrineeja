@@ -23,4 +23,15 @@ export class ExcelUtil {
         XLSX.utils.book_append_sheet(wb, ws, sheetName);
         XLSX.writeFile(wb, fileName);
     }
+
+    static fileToJson(event: any, instance: any, callback: any) {
+        let fileReader = new FileReader();
+        fileReader.readAsBinaryString(event.target.files[0]);
+        fileReader.onload = (event) => {
+            let data = event?.target?.result;
+            let workbook = XLSX.read(data, { type: "binary" });
+            let sheet = workbook.SheetNames[0];
+            callback(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]), instance);
+        }
+    }
 }

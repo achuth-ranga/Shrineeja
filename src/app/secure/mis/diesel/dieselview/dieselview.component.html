@@ -6,9 +6,12 @@
         <app-generic-select width=150 keyToUpdate='driverId' [objectToUpdate]="filterObj" label="Driver"
             [options]='dataService.fetchDrivers()' (emitter)="onDriverSelected($event)">
         </app-generic-select>
-        <app-generic-filter width=150 keyToUpdate="regno" [objectToUpdate]="filterObj" label="Regno"
+        <app-generic-select keyToUpdate="regno" [objectToUpdate]="filterObj" label="Vehicle"
+            [options]='dataService.fetchAllRegnos()' (emitter)="onRegnoSelected($event)">
+        </app-generic-select>
+        <!-- <app-generic-filter width=150 keyToUpdate="regno" [objectToUpdate]="filterObj" label="Regno"
             [filterMethod]='dataService.fetchRegnosLike' (emitter)="onRegnoSelected($event)">
-        </app-generic-filter>
+        </app-generic-filter> -->
         <button class="filter-button" mat-raised-button color="primary" (click)="fetchTrips()">Submit</button>
     </mat-card-content>
 </mat-card>
