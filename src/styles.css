@@ -16,6 +16,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
     background: #F44336;
 }
 
+.btn-right-icon-spacer {
+    padding-left: 5px;
+}
+
 .excel {
     padding-right: 5%;
     color: green !important;
@@ -42,6 +46,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
     color: whitesmoke;
     background-color: #3F51B5;
     margin-bottom: 5% !important;
+    text-align: center;
 }
 
 th.mat-header-cell {

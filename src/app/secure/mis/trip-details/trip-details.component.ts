@@ -6,7 +6,13 @@ import { TripColumnType } from 'src/app/services/enums/trip-column-type';
 import { MisMatserDataService } from 'src/app/services/mis-matser-data.service';
 import { Rule } from 'src/app/services/rules/rule';
 import { Rulefactory } from 'src/app/services/rules/rule-evaluation-factory';
-import { MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { BulkuploadComponent } from '../bulkupload/bulkupload.component';
+import { ValidatorFactory } from 'src/app/services/validators/validator-factory';
+import { combineLatestWith, Observable } from 'rxjs';
+import { UserType } from 'src/app/services/enums/user-type';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-trip-details',
@@ -20,14 +26,18 @@ export class TripDetailsComponent implements OnInit {
   public displayColumns: string[] = [];
   public note: string = "All columns must be entered before Saving";
   public ColumnTypes = TripColumnType;
+  public role: string;
+  public userType = UserType;
 
   @Output()
   newItemEvent = new EventEmitter<any>();
+  public dialogRef?: MatDialogRef<BulkuploadComponent>;
 
-
-  constructor(public tripService: TripsService, public dataService: MisMatserDataService, private snackBar: MatSnackBar) {
+  constructor(public tripService: TripsService, public dataService: MisMatserDataService, private snackBar: MatSnackBar, 
+    public dialog: MatDialog, public authService: AuthService) {
     const newRow: any = this.getDummyData(true);
     this.trips.data = [newRow, ...this.trips.data];
+    this.role = this.authService.getUserRole();
   }
 
   ngOnInit(): void {
@@ -67,15 +77,17 @@ export class TripDetailsComponent implements OnInit {
         v.isEdit = false
         this.trips.data[0] = v;
         this.trips.data = [this.getDummyData(true), ...this.trips.data];
-        this.openSnackBar("green-snackbar", "Trip added Successfully","close")
+        this.openSnackBar("green-snackbar", "Trip added Successfully", "close")
       },
       error: (e) => {
         row.isEdit = true
         console.log(e);
-        this.openSnackBar("red-snackbar", "Failed to add trip","close")
+        this.openSnackBar("red-snackbar", "Failed to add trip", "close")
       }
     });
   }
+
+
 
   openSnackBar(color: string, message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -86,10 +98,10 @@ export class TripDetailsComponent implements OnInit {
     });
   }
 
-  setDefaultTimeValue(key:any, element:any){
-    if(key == 'startTime'){
+  setDefaultTimeValue(key: any, element: any) {
+    if (key == 'startTime') {
       element[key] = "00:00";
-    }else if(key == 'endTime'){
+    } else if (key == 'endTime') {
       element[key] = "12:00";
     }
   }
@@ -115,8 +127,6 @@ export class TripDetailsComponent implements OnInit {
     if (data.value['id']) {
       obj[id] = data.value.id;
     }
-    console.log(data)
-    console.log(obj);
     this.populateDependentValues(obj);
   }
 
@@ -144,4 +154,46 @@ export class TripDetailsComponent implements OnInit {
     });
   }
 
+
+  /***
+   * Opens popup to upload excel file
+   */
+  uploadTrips() {
+    this.dialogRef = this.dialog.open(BulkuploadComponent, {
+      width: '40%',
+      data: {
+        title: 'Upload Trips Data',
+        columns: this.columnsSchema,
+        templateName: "TripsTemplate.xlsx",
+        validator: ValidatorFactory.getValidator("")
+      },
+    });
+
+    const sub = this.dialogRef.componentInstance.submitClicked.subscribe(result => {
+      this.dataService.updateIds(result, this.columnsSchema, this.finalResult, this);
+      sub.unsubscribe();
+    });
+  }
+
+  /**
+   * Call back received when adding of additional ids are done.
+   * 
+   * @param data 
+   * @param instance 
+   */
+  finalResult(data: any, instance: any) {
+    let array: any[] = [];
+    data.forEach((d: any) => {
+      array.push(instance.tripService.saveTrip(d));
+    });
+
+    array[0].pipe(combineLatestWith(array.slice(1)))
+      .subscribe((data: any[]) => {
+        data.forEach((v: any) => {
+          v.isEdit = false
+          instance.trips.data = [...instance.trips.data, v];
+        })
+        instance.dialogRef?.close();
+      })
+  }
 }

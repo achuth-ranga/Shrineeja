@@ -1,0 +1,25 @@
+<h2 mat-dialog-title class="dialog-title">
+  <span>{{data.title}}</span>
+  <span class="profile-spacer"></span>
+  <span>
+    <i class="fa fa-download" matTooltip="Download Excel Template" matTooltipPosition='below' matTooltipHideDelay="1000"
+      aria-hidden="true" (click)="downloadTemplate()"></i>
+  </span>
+</h2>
+
+<mat-dialog-content class="mat-typography">
+  <div>
+    <h3 class="spaces">Select the file to upload </h3>
+    <input hidden="true" id="input-file-id" type="file" accept=".xlsx" (change)="onFileChange($event)" #fileInput />
+    <button for="input-file-id" mat-raised-button color="primary" class="action-buttons file-button"
+      (click)="fileInput.click()">
+      <span class="space">Choose File</span>
+      <i class="fa fa-file-excel filter-button" aria-hidden="true"></i>
+    </button>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="action-buttons" mat-dialog-close>Cancel</button>
+  <button mat-raised-button class="action-buttons" [disabled]="jsonData.length == 0" (click)="submit()">Submit</button>
+</mat-dialog-actions>

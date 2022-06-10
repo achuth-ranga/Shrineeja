@@ -129,7 +129,7 @@ export class DieselviewComponent implements OnInit {
   }
 
   createExcelOutOfTable(data: any) {
-    ExcelUtil.createExcel(this.displayColumns, this.columnsSchema, data, "'DieselData.xlsx'", "diesel");
+    ExcelUtil.createExcel(this.displayColumns, this.columnsSchema, data, "DieselData.xlsx", "diesel");
   }
 
 

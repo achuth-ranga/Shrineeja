@@ -3,6 +3,14 @@
         <i> <b>Note:</b> {{note}}</i>
         <button mat-raised-button color="primary" class="filter-button" (click)="add()">Add Diesel Data</button>
     </span>
+
+    <span [hidden]="role !== userType.ADMIN">
+        <button mat-raised-button color="primary" class="filter-button" (click)="upload()">
+            <span>Upload</span>
+            <span class="btn-right-icon-spacer"></span>
+            <i class="fa fa-upload" aria-hidden="true"></i>
+        </button>
+    </span>
 </mat-card>
 
 <div class="wrapper">
@@ -41,10 +49,10 @@
                         *ngSwitchCase="ColumnTypes.DRIVER">
                     </app-generic-select>
 
-                    <app-generic-filter [width]="100" [keyToUpdate]="col.key" [objectToUpdate]="element"
-                        [filterMethod]='dataService.fetchRegnosLike' (emitter)="onValueReceivedFromChild($event)"
+                    <app-generic-select [keyToUpdate]="col.key" [objectToUpdate]="element"
+                        [options]='dataService.fetchAllRegnos()' (emitter)="onValueReceivedFromChild($event)"
                         *ngSwitchCase="ColumnTypes.REGNO_SEARCH">
-                    </app-generic-filter>
+                    </app-generic-select>
 
                     <app-generic-date [width]="100" [keyToUpdate]="col.key" [objectToUpdate]="element"
                         (emitter)="onDateReceivedFromChild($event)" *ngSwitchCase="ColumnTypes.DATE">

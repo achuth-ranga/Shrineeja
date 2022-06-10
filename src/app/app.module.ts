@@ -52,6 +52,9 @@ import { UserViewComponent } from './secure/user/view/view.component';
 import { AddUserComponent } from './secure/user/add-user/add-user.component';
 import { ProfileComponent } from './secure/profile/profile.component';
 import { ChangePasswordComponent } from './secure/change-password/change-password.component';
+import { BulkuploadComponent } from './secure/mis/bulkupload/bulkupload.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -74,7 +77,8 @@ import { ChangePasswordComponent } from './secure/change-password/change-passwor
     UserViewComponent,
     AddUserComponent,
     ProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    BulkuploadComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,9 @@ import { ChangePasswordComponent } from './secure/change-password/change-passwor
     MatAutocompleteModule,
     MatTableExporterModule,
     MatSnackBarModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepperModule,
+    MatTooltipModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
