@@ -41,11 +41,6 @@ const routes: Routes = [
     canActivate: [AclGuard]
   },
   {
-    path: 'trips/upload',
-    component: BulkuploadComponent,
-    canActivate: [AclGuard]
-  },
-  {
     path: 'diesel',
     component: DieselviewComponent,
     canActivate: [AclGuard]
@@ -53,11 +48,6 @@ const routes: Routes = [
   {
     path: 'diesel/add',
     component: DieseladdComponent,
-    canActivate: [AclGuard]
-  },
-  {
-    path: 'diesel/upload',
-    component: BulkuploadComponent,
     canActivate: [AclGuard]
   },
   {
