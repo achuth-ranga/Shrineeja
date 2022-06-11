@@ -5,6 +5,7 @@ import { TableColumn } from 'src/app/services/models/table-column';
 import { ExcelUtil } from 'src/app/services/excel/excel-util';
 import { Validator } from 'src/app/services/validators/validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TripColumnType } from 'src/app/services/enums/trip-column-type';
 
 @Component({
   selector: 'app-bulkupload',
@@ -61,14 +62,21 @@ export class BulkuploadComponent implements OnInit {
    */
   onExcelReadAsJson(jsonArray: any[], instance: any) {
     let map: any = {};
-    instance.data.columns.forEach((col: any) => map[col.label] = col.key)
+    instance.data.columns.forEach((col: any) => map[col.label] = col)
     let converted: any = [];
     jsonArray.forEach((o: any) => {
       let obj: any = {};
       Object.keys(o).forEach(function (key, index) {
         let formattedKey = key.replace(/\$/g, ''); // For any column has formula, header is added with $ sign, so removing it
         if (map.hasOwnProperty(formattedKey)) {
-          obj[map[formattedKey]] = o[key];
+          let value = o[key];
+          if (map[formattedKey].type === TripColumnType.DATE) {
+            value = instance.formatDate(value);
+          }
+          if (map[formattedKey].type === TripColumnType.TIME) {
+            value = instance.formatTime(value);
+          }
+          obj[map[formattedKey].key] = value;
         }
       });
       converted.push(obj);
@@ -91,4 +99,56 @@ export class BulkuploadComponent implements OnInit {
       instance.jsonData = converted;
     }
   }
+
+  formatDate(date: string): string {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+
+  formatTime(time: string): string {
+    // expected formats are HH:mm:ss H:mm:s
+    time = time.toLowerCase();
+    let array = time.split(":");
+    if (array.length == 2) {
+      array.push("00");
+    }
+    if (array[2].length > 2) {
+      // This may contains AM or PM
+      let val = array[2];
+      if (val.indexOf("am") >= 0) {
+        // we are good no change needed
+        val = val.replace(/ /g, '').replace("am", "");
+      } else if (val.indexOf("pm") >= 0) {
+        let hour = Number(array[0]);
+        if (hour + 12 == 24) {
+          array[0] = "00";
+        } else {
+          array[0] = "" + (hour + 12);
+        }
+        val = val.replace(/ /g, '').replace("pm", "");
+      }
+      array[2] = val;
+    }
+    array = array.map(v => this.adjustTimeLength(v));
+    return array[0] + ":" + array[1] + ":" + array[2];;
+  }
+
+  adjustTimeLength(str: string): string {
+    if (str.length == 1) {
+      return "0" + str;
+    }
+    return str;
+  }
 }
+
+

@@ -56,8 +56,8 @@ export class ColumnsValidator implements Validator<any>{
 
 
     isValidDate(dateString: string): boolean {
-        var regEx = /^\d{4}-\d{2}-\d{2}$/;
-        if (!dateString.match(regEx)) {
+        var pattern = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateString.match(pattern)) {
             return false;
         }
         return true;
