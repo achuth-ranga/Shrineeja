@@ -66,8 +66,9 @@ export class BulkuploadComponent implements OnInit {
     jsonArray.forEach((o: any) => {
       let obj: any = {};
       Object.keys(o).forEach(function (key, index) {
-        if (map.hasOwnProperty(key)) {
-          obj[map[key]] = o[key];
+        let formattedKey = key.replace(/\$/g, ''); // For any column has formula, header is added with $ sign, so removing it
+        if (map.hasOwnProperty(formattedKey)) {
+          obj[map[formattedKey]] = o[key];
         }
       });
       converted.push(obj);

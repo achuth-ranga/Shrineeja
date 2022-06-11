@@ -31,7 +31,10 @@ export class ExcelUtil {
             let data = event?.target?.result;
             let workbook = XLSX.read(data, { type: "binary" });
             let sheet = workbook.SheetNames[0];
-            callback(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]), instance);
+            callback(XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+                raw: false,
+                rawNumbers: false,
+            }), instance);
         }
     }
 }
