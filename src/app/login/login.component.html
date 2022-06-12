@@ -17,7 +17,10 @@
                     Please provide a valid password
                 </mat-error>
             </mat-form-field>
-            <button mat-raised-button [disabled]='form.invalid' color="primary">Login</button>
+            <!-- <button mat-raised-button [disabled]='form.invalid' color="primary">Login</button> -->
+            <app-spinner-button class="filter-button" [inProgress]='inProgress' [disabled]="form.invalid" label='Login'
+            (emitter)="onSubmit()">
+        </app-spinner-button>
         </form>
     </mat-card-content>
 </mat-card>

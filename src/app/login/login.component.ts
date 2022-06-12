@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   public form: FormGroup;
   public loginInvalid: boolean;
   public loginErrorMsg: string = "";
+  public inProgress: boolean = false;
   private formSubmitAttempt: boolean;
   private returnUrl: string;
 
@@ -38,10 +39,14 @@ export class LoginComponent implements OnInit {
       "username": this.form.value.username,
       "password": this.form.value.password
     }
+    this.inProgress = true;
     this.authService.authenticate(request).subscribe({
       next: (v) => this.loginSuccess(v),
-      error: (e) => this.loginError(e)
-    })
+      error: (e) => this.loginError(e),
+      complete: () => { this.inProgress = false; }
+    }).add(() => {
+      this.inProgress = false;
+    });
   }
 
   loginSuccess(response: any) {
@@ -50,10 +55,10 @@ export class LoginComponent implements OnInit {
 
   loginError(error: any) {
     this.loginInvalid = true;
-    if(error.status == 401){
+    if (error.status == 401) {
       this.loginErrorMsg = "Invalid Username or Password";
     }
-   
+
   }
 
 }
