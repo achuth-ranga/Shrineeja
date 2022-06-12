@@ -1,0 +1,13 @@
+<div *ngIf="inProgress == false; then button"></div>
+<ng-template #button>
+    <mat-icon class="fa-solid excel" fontIcon="fa-file-excel" (click)="buttonClicked()">
+    </mat-icon>
+
+</ng-template>
+
+<div *ngIf="inProgress == true; then spinner"></div>
+<ng-template #spinner>
+    <mat-icon>
+        <mat-spinner [diameter]="spinnerRadius"></mat-spinner>
+    </mat-icon>
+</ng-template>

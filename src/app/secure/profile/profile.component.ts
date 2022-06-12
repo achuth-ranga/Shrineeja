@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
   public numberOnlyFormatter: any = InputFormatter.numberOnly;
 
   public editInProgress: boolean = false;
+  public updating: boolean = false;
   public form: FormGroup;
   public invalidForm: boolean;
   public errorMsg: string = "";
@@ -71,12 +72,14 @@ export class ProfileComponent implements OnInit {
   }
 
   async onSubmit() {
+    this.updating = true;
     let userObj: any = this.form.getRawValue();
     userObj['username'] = this.authService.getUserId();
 
     this.service.updateProfile(userObj).subscribe({
       next: (v) => this.onSuccess(v),
-      error: (e) => this.onFailure(e)
+      error: (e) => this.onFailure(e),
+      complete: () => { this.updating = false; }
     })
   }
 

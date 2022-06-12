@@ -21,5 +21,7 @@
 
 <mat-dialog-actions align="center">
   <button mat-raised-button class="action-buttons" mat-dialog-close>Cancel</button>
-  <button mat-raised-button class="action-buttons" [disabled]="jsonData.length == 0" (click)="submit()">Submit</button>
+  <app-spinner-button class="filter-button" [inProgress]='fetching' [disabled]="jsonData.length == 0" label='Submit'
+    (emitter)="submit()">
+  </app-spinner-button>
 </mat-dialog-actions>

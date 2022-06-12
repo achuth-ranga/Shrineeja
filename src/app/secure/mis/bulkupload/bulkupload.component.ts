@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TableColumn } from 'src/app/services/models/table-column';
@@ -13,6 +13,9 @@ import { TripColumnType } from 'src/app/services/enums/trip-column-type';
   styleUrls: ['./bulkupload.component.css']
 })
 export class BulkuploadComponent implements OnInit {
+
+  @Input()
+  fetching: boolean  = false;
 
   @Output()
   submitClicked = new EventEmitter<any>();
@@ -47,6 +50,7 @@ export class BulkuploadComponent implements OnInit {
   }
 
   submit() {
+    this.fetching = true;
     this.submitClicked.emit(this.jsonData)
   }
 

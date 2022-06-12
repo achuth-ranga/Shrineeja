@@ -55,6 +55,9 @@ import { ChangePasswordComponent } from './secure/change-password/change-passwor
 import { BulkuploadComponent } from './secure/mis/bulkupload/bulkupload.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SpinnerButtonComponent } from './secure/components/spinner-button/spinner-button.component';
+import { SpinnerExcelIconComponent } from './secure/components/spinner-excel-icon/spinner-excel-icon.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AddUserComponent,
     ProfileComponent,
     ChangePasswordComponent,
-    BulkuploadComponent
+    BulkuploadComponent,
+    SpinnerButtonComponent,
+    SpinnerExcelIconComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +114,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatPaginatorModule,
     MatStepperModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -20,6 +20,7 @@ export class DieselviewComponent implements OnInit {
   public displayColumns: string[];
   public role: string = "";
   public userType = UserType;
+  public fetching: boolean = false;
 
   @ViewChild('paginator')
   private paginator!: MatPaginator;
@@ -58,20 +59,20 @@ export class DieselviewComponent implements OnInit {
   }
 
   onDriverSelected(driverObj: any) {
-    let key:string = 'driverId';
-    if(driverObj.value.id){
+    let key: string = 'driverId';
+    if (driverObj.value.id) {
       this.filterObj[key] = driverObj.value.id
-    }else{
-      delete this.filterObj[key]; 
+    } else {
+      delete this.filterObj[key];
     }
   }
 
   onRegnoSelected(regnoObj: any) {
-    let key:string = "regnos";
+    let key: string = "regnos";
     if (regnoObj.value.name) {
       this.filterObj[key] = [regnoObj.value.name]
     } else {
-      delete this.filterObj[key]; 
+      delete this.filterObj[key];
     }
   }
 
@@ -90,9 +91,13 @@ export class DieselviewComponent implements OnInit {
   }
 
   callServiceToFetchTrips(filter: any) {
+    if (!this.downloadInProgress) {
+      this.fetching = true;
+    }
     this.service.fetchDieselData(filter).subscribe({
       next: (v: any) => this.onTripsDataReceived(v),
-      error: (e) => this.onErrorReceivingTripsData(e)
+      error: (e) => this.onErrorReceivingTripsData(e),
+      complete: () => { this.fetching = false; }
     });
   }
 
@@ -122,7 +127,7 @@ export class DieselviewComponent implements OnInit {
       limit: this.length,
       page: 0
     }
-    if(this.filterObj.driverId != ''){
+    if (this.filterObj.driverId != '') {
       queryFilter.driverId = this.filterObj.driverId;
     }
     this.callServiceToFetchTrips(queryFilter);

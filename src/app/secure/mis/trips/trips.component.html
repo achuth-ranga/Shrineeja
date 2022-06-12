@@ -9,15 +9,15 @@
         <app-generic-select keyToUpdate="regno" [objectToUpdate]="filterObj" label="Vehicle"
             [options]='dataService.fetchAllRegnos()' (emitter)="onRegnoSelected($event)">
         </app-generic-select>
-        <button class="filter-button" mat-raised-button color="primary" (click)="fetchTrips()">Submit</button>
+        <app-spinner-button class="filter-button" [inProgress]='fetching' label='Submit' (emitter)="fetchTrips()">
+        </app-spinner-button>
     </mat-card-content>
 </mat-card>
 
 <div class="wrapper">
     <mat-toolbar class="grey-background">
         <mat-toolbar-row class="right-align">
-            <mat-icon class="fa-solid excel" color="primary" fontIcon="fa-file-excel" (click)="exportTable()">
-            </mat-icon>
+            <app-spinner-excel-icon [spinnerRadius]="20" [inProgress]= 'downloadInProgress' (emitter)="exportTable()"></app-spinner-excel-icon>
             <span class="menu-spacer"></span>
             <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
                 [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = onPageChange($event)">

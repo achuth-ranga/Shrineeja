@@ -1,0 +1,13 @@
+<div *ngIf="inProgress == false; then button"></div>
+<ng-template #button>
+    <button mat-raised-button color="primary" [disabled]="disabled" (click)="buttonClicked()">
+        {{label}}
+    </button>
+</ng-template>
+
+<div *ngIf="inProgress == true; then spinner"></div>
+<ng-template #spinner>
+    <mat-icon>
+        <mat-spinner [diameter]="spinnerRadius"></mat-spinner>
+    </mat-icon>
+</ng-template>

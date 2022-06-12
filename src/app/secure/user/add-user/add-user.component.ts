@@ -16,6 +16,7 @@ export class AddUserComponent implements OnInit {
 
   public title: string = '';
   public userAddType: any;
+  public creating: boolean = false;
 
   public form: FormGroup;
   public loginInvalid: boolean;
@@ -63,13 +64,15 @@ export class AddUserComponent implements OnInit {
   }
 
   async onSubmit(formGroupDirective: FormGroupDirective) {
+    this.creating = true;
     let user: any = this.form.getRawValue();
     user['userType'] = this.userAddType;
 
 
     this.service.createUser(user).subscribe({
       next: (v) => this.onSuccess(v, formGroupDirective),
-      error: (e) => this.onFailure(e)
+      error: (e) => this.onFailure(e),
+      complete: () => { this.creating = false; }
     })
   }
 

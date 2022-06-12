@@ -40,7 +40,9 @@
             </mat-form-field>
 
             <button mat-raised-button *ngIf="!editInProgress" (click)="editProfile()" color="primary">Edit</button>
-            <button mat-raised-button *ngIf="editInProgress" [disabled]='form.invalid' color="primary">Submit</button>
+            <app-spinner-button  *ngIf="editInProgress" class="filter-button" [inProgress]='updating' [disabled]="form.invalid" label='Update'
+                (emitter)="onSubmit()">
+            </app-spinner-button>
 
         </form>
     </mat-card-content>

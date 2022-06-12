@@ -23,6 +23,7 @@ export class TripsComponent implements OnInit {
   public displayColumns: string[];
   public role: string = "";
   public userType = UserType;
+  public fetching: boolean = false;
 
   @ViewChild('paginator')
   private paginator!: MatPaginator;
@@ -61,20 +62,20 @@ export class TripsComponent implements OnInit {
   }
 
   onDriverSelected(driverObj: any) {
-    let key:string = 'driverId';
-    if(driverObj.value.id){
+    let key: string = 'driverId';
+    if (driverObj.value.id) {
       this.filterObj[key] = driverObj.value.id
-    }else{
-      delete this.filterObj[key]; 
+    } else {
+      delete this.filterObj[key];
     }
   }
 
   onRegnoSelected(regnoObj: any) {
-    let key:string = "regnos";
+    let key: string = "regnos";
     if (regnoObj.value.name) {
       this.filterObj[key] = [regnoObj.value.name]
     } else {
-      delete this.filterObj[key]; 
+      delete this.filterObj[key];
     }
   }
 
@@ -93,9 +94,13 @@ export class TripsComponent implements OnInit {
   }
 
   callServiceToFetchTrips(filter: any) {
+    if (!this.downloadInProgress) {
+      this.fetching = true;
+    }
     this.tripService.fetchTrips(filter).subscribe({
       next: (v: any) => this.onTripsDataReceived(v),
-      error: (e) => this.onErrorReceivingTripsData(e)
+      error: (e) => this.onErrorReceivingTripsData(e),
+      complete: () => { this.fetching = false }
     });
   }
 

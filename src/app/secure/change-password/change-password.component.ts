@@ -15,6 +15,7 @@ export class ChangePasswordComponent implements OnInit {
   public form: FormGroup;
   public errorMsg: string = "";
   public passwordMisMatch: boolean = false;
+  public updating: boolean = false;
 
   public oldPasswordControl = new FormControl('', [Validators.required]);
   public newPasswordControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]);
@@ -34,10 +35,10 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.doesPasswordsMatch()){
+    if (!this.doesPasswordsMatch()) {
       this.passwordMisMatch = true;
       return;
-    }else{
+    } else {
       this.passwordMisMatch = false
     }
 
@@ -49,15 +50,17 @@ export class ChangePasswordComponent implements OnInit {
     let userObj: any = this.form.getRawValue();
     userObj['username'] = this.authService.getUserId();
 
+    this.updating = true;
     this.service.changePassword(userObj).subscribe({
       next: (v) => this.onSuccess(v),
-      error: (e) => this.onFailure(e)
+      error: (e) => this.onFailure(e),
+      complete: () => { this.updating = false; }
     })
   }
 
-  doesPasswordsMatch(): boolean{
-    let password:string = this.newPasswordControl.value;
-    let reEnterpassword:string = this.reEnterNewPasswordControl.value;
+  doesPasswordsMatch(): boolean {
+    let password: string = this.newPasswordControl.value;
+    let reEnterpassword: string = this.reEnterNewPasswordControl.value;
     return password === reEnterpassword;
   }
 
