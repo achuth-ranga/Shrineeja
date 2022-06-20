@@ -3,13 +3,11 @@
         <i> <b>Note:</b> {{note}}</i>
         <button mat-raised-button color="primary" class="filter-button" (click)="addTrip()">Add Trip</button>
     </span>
-    <span  [hidden]="role !== userType.ADMIN">
-        <button mat-raised-button color="primary" class="filter-button" (click)="uploadTrips()">
-            <span>Upload</span>
-            <span class="btn-right-icon-spacer"></span>
-            <i class="fa fa-upload" aria-hidden="true"></i>
-        </button>
-    </span>
+    <button mat-raised-button color="primary" class="filter-button" (click)="uploadTrips()">
+        <span>Upload</span>
+        <span class="btn-right-icon-spacer"></span>
+        <i class="fa fa-upload" aria-hidden="true"></i>
+    </button>
 </mat-card>
 
 <div class="wrapper">

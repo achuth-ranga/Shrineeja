@@ -11,6 +11,7 @@ import { MisMatserDataService } from 'src/app/services/mis-matser-data.service';
 import { TableColumn } from 'src/app/services/models/table-column';
 import { Rule } from 'src/app/services/rules/rule';
 import { Rulefactory } from 'src/app/services/rules/rule-evaluation-factory';
+import { RuleProcessor } from 'src/app/services/rules/rules-processor';
 import { ValidatorFactory } from 'src/app/services/validators/validator-factory';
 import { BulkuploadComponent } from '../../bulkupload/bulkupload.component';
 
@@ -136,23 +137,7 @@ export class DieseladdComponent implements OnInit {
    * like total hours from START DATE & END DATE
    */
   populateDependentValues(object: any) {
-    this.columnsSchema.forEach(column => {
-      if (column.hasOwnProperty('rule')) {
-        let rule: any = column.rule;
-        let ruleEvaluator: Rule<any> = Rulefactory.getRuleEvaluator(rule.type);
-        if (ruleEvaluator) {
-          let value = ruleEvaluator.getValue(object, column.rule.columns);
-          if (value) {
-            try {
-              let limitedTo = (Math.round(value * 100) / 100).toFixed(2);
-              object[column.key] = limitedTo;
-            } catch (error) {
-              object[column.key] = value;
-            }
-          }
-        }
-      }
-    });
+    RuleProcessor.processRulesAndPopulateDependentValues(object, this.columnsSchema);
   }
 
   /***

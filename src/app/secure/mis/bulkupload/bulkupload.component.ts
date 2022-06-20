@@ -6,6 +6,7 @@ import { ExcelUtil } from 'src/app/services/excel/excel-util';
 import { Validator } from 'src/app/services/validators/validator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TripColumnType } from 'src/app/services/enums/trip-column-type';
+import { RuleProcessor } from 'src/app/services/rules/rules-processor';
 
 @Component({
   selector: 'app-bulkupload',
@@ -15,7 +16,7 @@ import { TripColumnType } from 'src/app/services/enums/trip-column-type';
 export class BulkuploadComponent implements OnInit {
 
   @Input()
-  fetching: boolean  = false;
+  fetching: boolean = false;
 
   @Output()
   submitClicked = new EventEmitter<any>();
@@ -33,7 +34,9 @@ export class BulkuploadComponent implements OnInit {
 
 
   downloadTemplate() {
-    ExcelUtil.createExcel(this.getHeaders(), this.data.columns, [], this.data.templateName, "template");
+    // Filter out the columns which has rules
+    let columns: TableColumn[] = this.data.columns.filter((column: TableColumn) => !column.rule);
+    ExcelUtil.createExcel(this.getHeaders(), columns, [], this.data.templateName, "template");
   }
 
   getHeaders() {
@@ -85,6 +88,13 @@ export class BulkuploadComponent implements OnInit {
       });
       converted.push(obj);
     });
+    console.log("Before ===> ");
+    console.log(converted);
+    // Now Populate values based on rules
+    RuleProcessor.processRulesAndPopulateDependentValuesInEach(converted, instance.data.columns)
+    console.log("After ===> ");
+    console.log(converted);
+    // Now Validate the data
     let validator: Validator<any> = instance.data.validator;
     if (validator) {
       try {
